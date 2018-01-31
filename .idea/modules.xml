@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JavaCS.iml" filepath="$PROJECT_DIR$/JavaCS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JaydeApp/JaydeApp.iml" filepath="$PROJECT_DIR$/JaydeApp/JaydeApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JaydeStudy/JaydeStudy.iml" filepath="$PROJECT_DIR$/JaydeStudy/JaydeStudy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JaydeTest/JaydeTest.iml" filepath="$PROJECT_DIR$/JaydeTest/JaydeTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JaydeUtil/JaydeUtil.iml" filepath="$PROJECT_DIR$/JaydeUtil/JaydeUtil.iml" />
     </modules>
   </component>
 </project>

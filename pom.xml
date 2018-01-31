@@ -6,7 +6,13 @@
 
     <groupId>JavaCS</groupId>
     <artifactId>all</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
+    <modules>
+        <module>JaydeStudy</module>
+        <module>JaydeApp</module>
+        <module>JaydeTest</module>
+        <module>JaydeUtil</module>
+    </modules>
 
 </project>
