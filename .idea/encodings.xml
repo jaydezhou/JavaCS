@@ -2,6 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/JaydeApp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/annotation/po/Log.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/aop/Log.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/aop/TransactionManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/beans/FmtParm.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/beans/Po.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/sql/where/SqlUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JaydeApp/src/main/java/com/aiyi/core/util/GenericsUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JaydeStudy" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JaydeTest" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JaydeUtil" charset="UTF-8" />

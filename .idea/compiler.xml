@@ -11,14 +11,16 @@
         <module name="JaydeStudy" />
         <module name="JaydeTest" />
         <module name="JaydeUtil" />
+        <module name="Jdk_Demo_Ensemble8" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="9">
       <module name="JavaCS" target="1.9" />
-      <module name="JaydeApp" target="1.9" />
+      <module name="JaydeApp" target="1.7" />
       <module name="JaydeStudy" target="1.9" />
       <module name="JaydeTest" target="1.9" />
       <module name="JaydeUtil" target="1.9" />
+      <module name="Jdk_Demo_Ensemble8" target="1.9" />
     </bytecodeTargetLevel>
   </component>
 </project>
