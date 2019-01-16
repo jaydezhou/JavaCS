@@ -25,4 +25,10 @@ public class RedmineProject {
     private String projectName;
     List<RedmineIssue> listRootIssues = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return
+                projectName
+                ;
+    }
 }

@@ -28,4 +28,8 @@ public class RedmineIssue {
     private String description;
     private List<RedmineIssue> listSonIssues = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return subject;
+    }
 }
