@@ -25,6 +25,11 @@ public class RedmineProject {
     private String projectName;
     List<RedmineIssue> listRootIssues = new ArrayList<>();
 
+    //最深层级
+    int maxLevel=0;
+    //总共节点数
+    int issueCount = 0;
+
     @Override
     public String toString() {
         return

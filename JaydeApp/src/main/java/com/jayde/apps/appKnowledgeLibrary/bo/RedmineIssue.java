@@ -27,9 +27,18 @@ public class RedmineIssue {
     private String trackerType;
     private String description;
     private List<RedmineIssue> listSonIssues = new ArrayList<>();
+    int issueLevel;
+    private RedmineProject parentProject;
 
     @Override
     public String toString() {
         return subject;
+    }
+
+    public void setIssueLevel(int level) {
+        issueLevel = level;
+        if (level > parentProject.getMaxLevel()) {
+            parentProject.setMaxLevel(issueLevel);
+        }
     }
 }
