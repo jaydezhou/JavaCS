@@ -41,4 +41,34 @@ public class RedmineIssue {
             parentProject.setMaxLevel(issueLevel);
         }
     }
+
+    public void getAllSonIssues(List<RedmineIssue> list) {
+        if (listSonIssues.size() == 0) {
+            return;
+        } else {
+            list.addAll(listSonIssues);
+            for (RedmineIssue issue : listSonIssues) {
+                issue.getAllSonIssues(list);
+            }
+        }
+    }
+
+    public RedmineIssue getIssueById(String issueId) {
+
+        for (RedmineIssue sonIssue : listSonIssues) {
+            if (sonIssue.getIssueId().equals(issueId)) {
+                return sonIssue;
+            }
+        }
+
+        RedmineIssue issue = null;
+        for (RedmineIssue sonIssue : listSonIssues) {
+            issue = sonIssue.getIssueById(issueId);
+            if (issue != null) {
+                return issue;
+            }
+        }
+
+        return null;
+    }
 }

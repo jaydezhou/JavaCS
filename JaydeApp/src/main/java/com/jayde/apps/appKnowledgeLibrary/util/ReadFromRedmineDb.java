@@ -1,6 +1,7 @@
 package com.jayde.apps.appKnowledgeLibrary.util;
 
 import com.jayde.apps.appKnowledgeLibrary.bo.RedmineIssue;
+import com.jayde.apps.appKnowledgeLibrary.bo.RedmineIssueGW;
 import com.jayde.apps.appKnowledgeLibrary.bo.RedmineProject;
 import lombok.extern.log4j.Log4j;
 import org.dom4j.Document;
@@ -102,6 +103,38 @@ public class ReadFromRedmineDb {
         return issueList;
     }
 
+    public List<RedmineIssueGW> getIssuesGW() {
+        List<RedmineIssueGW> issueGWList = new ArrayList<>();
+        try {
+            Class.forName(DRIVER);
+            System.out.println("注册驱动成功！！");
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from issuesgw order by id");
+            while (resultSet.next()) {
+                RedmineIssueGW redmineIssueGw = new RedmineIssueGW();
+                redmineIssueGw.setIssueId(resultSet.getString("id"));
+                redmineIssueGw.setSubject(resultSet.getString("subject"));
+                redmineIssueGw.setYw(resultSet.getString("yw"));
+                redmineIssueGw.setFy(resultSet.getString("fy"));
+                redmineIssueGw.setZs(resultSet.getString("zs"));
+                for (int i = 0; i < RedmineIssueGW.lenth; i++) {
+                    redmineIssueGw.setOtherText(i, resultSet.getString("other" + (i + 1)));
+                }
+                issueGWList.add(redmineIssueGw);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            System.out.println("注册驱动失败！！");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return issueGWList;
+    }
 
     public List<RedmineProject> getProjectsAndIssues() {
         List<RedmineProject> projectList = getProjects();

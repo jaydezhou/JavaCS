@@ -1,7 +1,8 @@
 package com.jayde.apps.appKnowledgeLibrary.bo;
 
 import lombok.Data;
-import lombok.ToString;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,14 @@ import java.util.List;
  * <p>Copyright: Copyright (c) 2019</p>
  */
 @Data
+@Log4j
 public class RedmineProject {
     private String projectId;
     private String projectName;
     List<RedmineIssue> listRootIssues = new ArrayList<>();
 
     //最深层级
-    int maxLevel=0;
+    int maxLevel = 0;
     //总共节点数
     int issueCount = 0;
 
@@ -35,5 +37,34 @@ public class RedmineProject {
         return
                 projectName
                 ;
+    }
+
+    public List<RedmineIssue> getAllIssues() {
+        List<RedmineIssue> listAllIssues = new ArrayList<>();
+        listAllIssues.addAll(listRootIssues);
+        for (RedmineIssue issue : listRootIssues) {
+            issue.getAllSonIssues(listAllIssues);
+        }
+        log.info(listAllIssues.size());
+        return listAllIssues;
+    }
+
+    public RedmineIssue getIssueById(String issueId) {
+
+        for (RedmineIssue sonIssue : listRootIssues) {
+            if (sonIssue.getIssueId().equals(issueId)) {
+                return sonIssue;
+            }
+        }
+
+        RedmineIssue issue = null;
+        for (RedmineIssue sonIssue : listRootIssues) {
+            issue = sonIssue.getIssueById(issueId);
+            if (issue != null) {
+                return issue;
+            }
+        }
+
+        return null;
     }
 }
