@@ -23,6 +23,14 @@ import java.util.List;
 @Log4j
 public class Issue {
 
+    public static final String TRACKER_ERROR = "1";
+    public static final String TRACKER_FUNCTION = "2";
+    public static final String TRACKER_DEPEND = "3";
+    public static final String TRACKER_KNOWLEDGE_GROUP = "4";
+    public static final String TRACKER_KNOWLEDGE_POINT = "5";
+    public static final String TRACKER_INNER_FILE = "6";
+    public static final String TRACKER_LINK_FILE = "7";
+
     //固有属性
     private String projectId;
     private String issueId;
@@ -34,7 +42,7 @@ public class Issue {
     //扩展属性
     private List<Issue> listSonIssues = new ArrayList<>();
     int issueLevel;
-    private RedmineProject parentProject;
+    private Project parentProject;
 
     @Override
     public String toString() {

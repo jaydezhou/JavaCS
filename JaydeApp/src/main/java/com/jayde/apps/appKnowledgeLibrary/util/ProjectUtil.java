@@ -4,6 +4,7 @@ import com.jayde.apps.appKnowledgeLibrary.bo.Issue;
 import com.jayde.apps.appKnowledgeLibrary.bo.Project;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ProjectName: JavaCS
@@ -22,6 +23,7 @@ public interface ProjectUtil {
 
     /**
      * 本接口实现将Project集合与Issue集合整合为树状结构
+     *
      * @param projectList
      * @param issueList
      */
@@ -29,11 +31,14 @@ public interface ProjectUtil {
 
     /**
      * 本接口查询Issue是否在Project中，返回null为不存在
+     *
      * @param project
      * @param issue
      * @return
      */
-    Issue FindIssueInProject(Project project, Issue issue);
+//    Issue FindIssueInProject(Project project, Issue issue);
 
+    void showTree(Project project);
 
+    void exportMD(Project project);
 }

@@ -4,7 +4,6 @@ import com.jayde.apps.appKnowledgeLibrary.bo.Issue;
 import com.jayde.apps.appKnowledgeLibrary.bo.Project;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ProjectName: JavaCS
@@ -31,5 +30,5 @@ public interface DbUtil {
      * 本接口实现从库中读取Issue信息
      * @return
      */
-    Map<String,Issue> readIssueMap();
+    List<Issue> readIssueList();
 }

@@ -100,9 +100,9 @@ public class RedmineDbUtil implements DbUtil {
     }
 
     @Override
-    public Map<String, Issue> readIssueMap() {
+    public List<Issue> readIssueList() {
 
-        Map<String, Issue> issueMap = new HashMap<>();
+        List<Issue> issueList = new ArrayList<>();
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from issues order by id");
@@ -114,7 +114,7 @@ public class RedmineDbUtil implements DbUtil {
                 issue.setTrackerType(resultSet.getString("tracker_id"));
                 issue.setSubject(resultSet.getString("subject"));
                 issue.setDescription(resultSet.getString("description"));
-                issueMap.put(issue.getIssueId(),issue);
+                issueList.add(issue);
             }
             resultSet.close();
             statement.close();
@@ -122,6 +122,6 @@ public class RedmineDbUtil implements DbUtil {
                 Exception e) {
 
         }
-        return issueMap;
+        return issueList;
     }
 }
