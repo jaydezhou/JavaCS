@@ -22,7 +22,7 @@ public class MovieDao extends Dao {
 
     public void findById(String id) {
         sqlsession.selectOne("MovieMapper.selectGroupById", id);
-        System.out.println(sqlsession.selectOne("MovieMapper.selectGroupById", id));
+        System.out.println(sqlsession.selectOne("MovieMapper.selectGroupById", id).toString());
         //因为输出值是一个map集合，所以打印一个map
     }
 
