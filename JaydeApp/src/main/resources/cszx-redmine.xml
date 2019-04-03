@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <project id="4"
+             name="测试中心"
+             uri="http://172.21.11.112:81/redmine"
+             apiAccessKey="d4038e01167d0109bbcf854d1937f72b859fb184"
+             projectKey="cszx"/>
+    <statuses>
+        <status id="1" name="新建"/>
+        <status id="3" name="已解决"/>
+        <status id="5" name="已关闭"/>
+    </statuses>
+    <trackers>
+        <tracker id="6" name="任务分解WBS"/>
+        <tracker id="8" name="知识库"/>
+        <tracker id="9" name="专项工作"/>
+        <tracker id="10" name="目录"/>
+    </trackers>
+    <users>
+        <user id="7" name="xiangsx" cnname="向晟翔" folder="181"/>
+        <user id="8" name="zhangzb" cnname="张泽斌" folder="182"/>
+        <user id="9" name="yueby" cnname="岳博远" folder="183"/>
+        <user id="6" name="zhangcc" cnname="张聪聪" folder="184"/>
+        <group id="10" name="" cnname="测试中心成员组" users="6,7,8,9,11"/>
+    </users>
+    <gzrzRoot id="3"/>
+</configuration>
