@@ -164,10 +164,16 @@ public class CszxRedmineUtil {
         for (User tempuser : userMap.values()) {
             userNameTempZxrw.add(tempuser.getLastName() + tempuser.getFirstName() + "的临时专项工作");
             System.out.println(tempuser.getLastName() + tempuser.getFirstName() + "的临时专项工作");
+            for (Issue issue : allTempOpendIssueNotRz) {
+                if (issue.getSubject().equals(userNameTempZxrw)) {
+                    allTempOpendIssueNotRz.remove(issue);
+                    System.out.println("remove:"+issue);
+                }
+            }
         }
         List<Issue> allOpendIssueNotRz = new TreeList();
         for (Issue tempissue : allTempOpendIssueNotRz) {
-            if (tempissue.getTracker().getId()!= 9 || userNameTempZxrw.contains(tempissue.getSubject()) == false) {
+            if (tempissue.getTracker().getId() != 9 || userNameTempZxrw.contains(tempissue.getSubject()) == false) {
                 allOpendIssueNotRz.add(tempissue);
             }
         }
@@ -225,8 +231,8 @@ public class CszxRedmineUtil {
         for (Issue issue : allOpendIssueNotRz) {
             if (issue.getAssigneeId() == user.getId()) {
                 if (issue.getDoneRatio() < 100 || issue.getStatusId() == 1) {
-                    if (issue.getStartDate() == null || DateToLocal(issue.getStartDate()).isAfter(checkDate) ) {
-                        if (issue.getDueDate() == null || DateToLocal(issue.getDueDate()).isAfter(checkDate) ) {
+                    if (issue.getStartDate() == null || DateToLocal(issue.getStartDate()).isAfter(checkDate)) {
+                        if (issue.getDueDate() == null || DateToLocal(issue.getDueDate()).isAfter(checkDate)) {
                             outMdText.append(showIssueInfo(issue));
                         }
                     }
