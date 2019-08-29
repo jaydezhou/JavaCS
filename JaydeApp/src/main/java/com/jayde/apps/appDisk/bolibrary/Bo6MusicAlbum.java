@@ -55,4 +55,19 @@ public class Bo6MusicAlbum  extends BoFile{
     public void calcuQuality(){
 
     }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo6MusicAlbum cycleCreate() {
+        return null;
+    }
 }

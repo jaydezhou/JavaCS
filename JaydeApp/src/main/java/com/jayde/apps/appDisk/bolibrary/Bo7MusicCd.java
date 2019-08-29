@@ -56,13 +56,13 @@ public class Bo7MusicCd  extends BoFile{
         for (File sonFile : sonFiles) {
             System.out.println("                  File:" + sonFile.getName());
             if (UtilMusicFile.isMusicFile(sonFile)) {
-                listMusicFile.add(new Bo8MusicFile(sonFile));
+                listMusicFile.add(new Bo8MusicFile(sonFile,this));
             }
-            listMusicOtherFile.add(new Bo8OtherFile(sonFile));
+            listMusicOtherFile.add(new Bo8OtherFile(sonFile,this));
         }
         File[] sonPaths = inputCdPath.listFiles(onlyDirectory);
         for (File sonPath : sonPaths) {
-            listMusicOtherFile.add(new Bo8OtherFile(sonPath));
+            listMusicOtherFile.add(new Bo8OtherFile(sonPath,this));
         }
 
         calcuQuality();
@@ -74,6 +74,21 @@ public class Bo7MusicCd  extends BoFile{
         for(Bo8MusicFile musicFile:listMusicFile){
 //            scoreTotal = scoreTotal+InfoQualityMusic.vertifyMusicFile(file);
         }
+    }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo7MusicCd cycleCreate() {
+        return null;
     }
 }
 

@@ -18,16 +18,30 @@ import java.io.File;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class Bo8MusicFile  extends BoFile{
+public class Bo8MusicFile extends BoFile {
     String id;
     String fileName;
     long fileSize;
-    InfoQuality infoQuality;
-    AudioHeader hear;
     Bo7MusicCd parentCd = null;
     int mediaType = 0;
-    public Bo8MusicFile(File inputFile){
+
+    public Bo8MusicFile(File inputFile, Bo7MusicCd inputParent) {
+        selfFile = inputFile;
+        parentCd = inputParent;
+    }
+
+    @Override
+    public void calculate() {
 
     }
 
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo8MusicFile cycleCreate() {
+        return null;
+    }
 }

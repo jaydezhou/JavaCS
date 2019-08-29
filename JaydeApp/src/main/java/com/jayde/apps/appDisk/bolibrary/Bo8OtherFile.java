@@ -16,7 +16,25 @@ import java.io.File;
  * <p>Copyright: Copyright (c) 2019</p>
  */
 public class Bo8OtherFile extends BoFile {
-    public Bo8OtherFile(File inputFile){
+    Bo7MusicCd parentCd = null;
 
+    public Bo8OtherFile(File inputFile, Bo7MusicCd inputParent) {
+        selfFile = inputFile;
+        parentCd = inputParent;
+    }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo8OtherFile cycleCreate() {
+        return null;
     }
 }

@@ -15,7 +15,7 @@ import java.io.File;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class BoFile {
+public abstract class BoFile implements BoFileInterface {
     public static int MUSIC_LIBRARYSET = 1;
     public static int MUSIC_LIBRARY = 2;
     public static int MUSIC_TYPE = 3;
@@ -36,6 +36,10 @@ public class BoFile {
     int type;
     float scoretotal;
     boolean calculated = false;
+
+    public BoFile() {
+        System.out.println("blank constract");
+    }
 
     public int getType() {
         return type;
@@ -69,11 +73,4 @@ public class BoFile {
         this.selfFile = selfFile;
     }
 
-    public void calculate() {
-
-    }
-
-    public void cycleCalculate() {
-
-    }
 }

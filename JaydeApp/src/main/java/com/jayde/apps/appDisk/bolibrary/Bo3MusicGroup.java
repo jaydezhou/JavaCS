@@ -56,5 +56,20 @@ public class Bo3MusicGroup  extends BoFile{
     public void calcuQuality() {
 
     }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo3MusicGroup cycleCreate() {
+        return null;
+    }
 }
 

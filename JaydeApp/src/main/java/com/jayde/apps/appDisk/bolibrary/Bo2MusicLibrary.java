@@ -61,4 +61,19 @@ public class Bo2MusicLibrary  extends BoFile{
     public void calcuQuality() {
 
     }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo2MusicLibrary cycleCreate() {
+        return null;
+    }
 }

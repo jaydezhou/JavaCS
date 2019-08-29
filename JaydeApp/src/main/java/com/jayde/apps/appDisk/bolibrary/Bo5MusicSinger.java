@@ -56,4 +56,19 @@ public class Bo5MusicSinger  extends BoFile{
     public void calcuQuality(){
 
     }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo5MusicSinger cycleCreate() {
+        return null;
+    }
 }

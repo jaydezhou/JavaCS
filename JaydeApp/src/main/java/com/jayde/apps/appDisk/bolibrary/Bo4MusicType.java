@@ -56,4 +56,19 @@ public class Bo4MusicType  extends BoFile{
     public void calcuQuality(){
 
     }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo4MusicType cycleCreate() {
+        return null;
+    }
 }

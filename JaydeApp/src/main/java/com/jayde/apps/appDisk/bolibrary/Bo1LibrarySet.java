@@ -69,4 +69,19 @@ public class Bo1LibrarySet extends BoFile {
     public static void main(String[] args) {
         Bo1LibrarySet librarySet = new Bo1LibrarySet("/Users/mac/Desktop/标准文件夹");
     }
+
+    @Override
+    public void calculate() {
+
+    }
+
+    @Override
+    public void cycleCalculate() {
+
+    }
+
+    @Override
+    public Bo1LibrarySet cycleCreate() {
+        return null;
+    }
 }
