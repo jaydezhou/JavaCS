@@ -31,8 +31,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Log4j
 public class NeoFinderFileUtil {
+    static long b = 0;
+    static float k = 1024f;
+    static float m = 1048576l;
+    static float g = 1073741824l;
+    static float t = 1099511627776l;
+
     String rootPathStr = "/Users/mac/Documents/diskpath/NeoFinder导出";
-    String neoFileStr = "ST5T【音频】";
+    String neoFileStr = "MusicC4T";
     String split = "/";
     Map<Integer, String> blankMap = new HashMap<>();
     int iMaxLevel = 0;
@@ -237,8 +243,8 @@ public class NeoFinderFileUtil {
             Element eleRoot = document.addElement("ROOT");
 
             eleRoot.addAttribute("name", root.element("name").getTextTrim());
-            eleRoot.addAttribute("size", root.element("size").getTextTrim());
-            eleRoot.addAttribute("unused", root.element("unused").getTextTrim());
+            eleRoot.addAttribute("size", toSizeStr(root.element("size").getTextTrim()));
+            eleRoot.addAttribute("unused", toSizeStr(root.element("unused").getTextTrim()));
             eleRoot.addAttribute("folders", root.element("folders").getTextTrim());
             eleRoot.addAttribute("files", root.element("files").getTextTrim());
             eleRoot.addAttribute("serial", root.element("serial").getTextTrim());
@@ -258,31 +264,31 @@ public class NeoFinderFileUtil {
     }
 
     public void step9_1_addFolders(Element eleParentFolder, ItemFolder itemFolder) {
-        Element eleThisFolder = eleParentFolder.addElement("Folder");
+        Element eleThisFolder = eleParentFolder.addElement("P");
 
-        eleThisFolder.addAttribute("itemID", itemFolder.getItemID());
-        eleThisFolder.addAttribute("parentID", itemFolder.getParentID());
-        eleThisFolder.addAttribute("name", itemFolder.getName());
-        eleThisFolder.addAttribute("type", itemFolder.getType());
-        eleThisFolder.addAttribute("level", String.valueOf(itemFolder.getLevel()));
-        eleThisFolder.addAttribute("size", itemFolder.getSize());
-        eleThisFolder.addAttribute("crDate", itemFolder.getCrDate());
-        eleThisFolder.addAttribute("modDate", itemFolder.getModDate());
-        eleThisFolder.addAttribute("selfFilesSize", String.valueOf(itemFolder.getSelfFilesSize()));
-        eleThisFolder.addAttribute("selfFilesCount", String.valueOf(itemFolder.getSelfFilesCount()));
-        eleThisFolder.addAttribute("selfFoldersCount", String.valueOf(itemFolder.getSelfFoldersCount()));
-        eleThisFolder.addAttribute("sonFilesSize", String.valueOf(itemFolder.getSonFilesSize()));
-        eleThisFolder.addAttribute("sonFilesCount", String.valueOf(itemFolder.getSonFilesCount()));
-        eleThisFolder.addAttribute("sonFoldersCount", String.valueOf(itemFolder.getSonFoldersCount()));
-//        for (ItemFile sonFile : itemFolder.getSonFileItems()) {
-//            Element eleSonFile = eleThisFolder.addElement("File");
-//            eleSonFile.addAttribute("itemID", sonFile.getItemID());
+        eleThisFolder.addAttribute("id", itemFolder.getItemID());
+//        eleThisFolder.addAttribute("parentID", itemFolder.getParentID());
+        eleThisFolder.addAttribute("n", itemFolder.getName());
+//        eleThisFolder.addAttribute("type", itemFolder.getType());
+        eleThisFolder.addAttribute("l", String.valueOf(itemFolder.getLevel()));
+        eleThisFolder.addAttribute("s", toSizeStr(itemFolder.getSize()));
+        eleThisFolder.addAttribute("c", itemFolder.getCrDate());
+        eleThisFolder.addAttribute("m", itemFolder.getModDate());
+        eleThisFolder.addAttribute("ss", toSizeStr(itemFolder.getSelfFilesSize()));
+        eleThisFolder.addAttribute("sf", String.valueOf(itemFolder.getSelfFilesCount()));
+        eleThisFolder.addAttribute("sp", String.valueOf(itemFolder.getSelfFoldersCount()));
+        eleThisFolder.addAttribute("as", toSizeStr(itemFolder.getSonFilesSize()));
+        eleThisFolder.addAttribute("af", String.valueOf(itemFolder.getSonFilesCount()));
+        eleThisFolder.addAttribute("ap", String.valueOf(itemFolder.getSonFoldersCount()));
+        for (ItemFile sonFile : itemFolder.getSonFileItems()) {
+            Element eleSonFile = eleThisFolder.addElement("F");
+            eleSonFile.addAttribute("id", sonFile.getItemID());
 //            eleSonFile.addAttribute("parentID", sonFile.getParentID());
-//            eleSonFile.addAttribute("name", sonFile.getName());
-//            eleSonFile.addAttribute("size", sonFile.getSize());
-//            eleSonFile.addAttribute("crDate", sonFile.getCrDate());
-//            eleSonFile.addAttribute("modDate", sonFile.getModDate());
-//        }
+            eleSonFile.addAttribute("n", sonFile.getName());
+            eleSonFile.addAttribute("s", toSizeStr(sonFile.getSize()));
+            eleSonFile.addAttribute("c", sonFile.getCrDate());
+            eleSonFile.addAttribute("m", sonFile.getModDate());
+        }
         for (ItemFolder sonFolder : itemFolder.getSonFolderItems()) {
             step9_1_addFolders(eleThisFolder, sonFolder);
         }
@@ -298,6 +304,27 @@ public class NeoFinderFileUtil {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
+    }
+
+    public String toSizeStr(long longSize) {
+        if (longSize >= t) {
+            return String.format("%.2f", longSize / t) + "t";
+        }
+        if (longSize >= g) {
+            return String.format("%.2f", longSize / g) + "g";
+        }
+        if (longSize >= m) {
+            return String.format("%.2f", longSize / m) + "m";
+        }
+        if (longSize >= k || longSize >=b) {
+            return String.format("%.2f", longSize / k) + "k";
+        }
+        return "";
+    }
+
+    public String toSizeStr(String longSizeText) {
+        long longSize = Long.valueOf(longSizeText);
+        return toSizeStr(longSize);
     }
 
     @Data
@@ -370,30 +397,11 @@ public class NeoFinderFileUtil {
 
         @Override
         public String toString() {
-            return name + "    [Self]Path(" + selfFoldersCount + ")  File(" + selfFilesCount + ")【" + toSizeStr(selfFilesSize) + "】  [Son]Path(" + sonFoldersCount + ")File(" + sonFilesCount + ")【" + toSizeStr(sonFilesSize) + "】";
+            return name + "    [Self]Path(" + selfFoldersCount + ")  File(" + selfFilesCount + ")【" + selfFilesSize + "】  [Son]Path(" + sonFoldersCount + ")File(" + sonFilesCount + ")【" + sonFilesSize + "】";
 //            return name + selfFilesCount + "(" + toSizeStr(selfFilesSize) + ")   " + sonFilesCount + "(" + toSizeStr(sonFilesSize) + ")";
         }
 
-        public String toSizeStr(Long longSize) {
-            if (longSize >= g) {
-                return String.format("%.2f", longSize / g) + "g";
-            }
-            if (longSize >= m) {
-                return String.format("%.2f", longSize / m) + "m";
-            }
-            if (longSize >= k) {
-                return String.format("%.2f", longSize / k) + "k";
-            }
-            if (longSize >= b) {
-                return String.format("%.2f", longSize / k) + "k";
-            }
-            return "";
-        }
 
-        long b = 0;
-        float k = 1024f;
-        float m = 1048576l;
-        float g = 1073741824l;
     }
 
     @Data
