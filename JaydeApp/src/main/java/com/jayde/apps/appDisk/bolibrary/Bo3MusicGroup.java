@@ -19,12 +19,11 @@ import java.util.List;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class Bo3MusicGroup  extends BoFile{
-    static OnlyDirectory onlyDirectory = new OnlyDirectory();
+public class Bo3MusicGroup extends BoFile {
 
     List<Bo4MusicType> listType = new ArrayList<>();
+    List<Bo8OtherFile> listOtherFiles = new ArrayList<>();
     Bo2MusicLibrary parentLibrary = null;
-    int mediaType = 0;
 
     public static boolean vertifyByName(String pathname) {
         if (pathname.startsWith("【组】"))
@@ -53,6 +52,30 @@ public class Bo3MusicGroup  extends BoFile{
         calcuQuality();
     }
 
+    public List<Bo4MusicType> getListType() {
+        return listType;
+    }
+
+    public void setListType(List<Bo4MusicType> listType) {
+        this.listType = listType;
+    }
+
+    public List<Bo8OtherFile> getListOtherFiles() {
+        return listOtherFiles;
+    }
+
+    public void setListOtherFiles(List<Bo8OtherFile> listOtherFiles) {
+        this.listOtherFiles = listOtherFiles;
+    }
+
+    public Bo2MusicLibrary getParentLibrary() {
+        return parentLibrary;
+    }
+
+    public void setParentLibrary(Bo2MusicLibrary parentLibrary) {
+        this.parentLibrary = parentLibrary;
+    }
+
     public void calcuQuality() {
 
     }
@@ -67,9 +90,20 @@ public class Bo3MusicGroup  extends BoFile{
 
     }
 
-    @Override
-    public Bo3MusicGroup cycleCreate() {
-        return null;
+    public static Bo3MusicGroup cycleCreate(Bo2MusicLibrary inputPparentLibrary, File inputPath) {
+        Bo3MusicGroup group = new Bo3MusicGroup(inputPath);
+        group.setParentLibrary(inputPparentLibrary);
+        File[] paths = inputPath.listFiles(onlyDirectory);
+        for (File path : paths) {
+            Bo4MusicType bo4MusicType = Bo4MusicType.cycleCreate(group, path);
+            group.getListType().add(bo4MusicType);
+        }
+        File[] files = inputPath.listFiles(onlyFile);
+        for (File file : files) {
+            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+            group.getListOtherFiles().add(bo8OtherFile);
+        }
+        return group;
     }
 }
 

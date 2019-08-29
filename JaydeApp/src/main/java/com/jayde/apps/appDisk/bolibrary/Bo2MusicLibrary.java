@@ -19,15 +19,13 @@ import java.util.List;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class Bo2MusicLibrary  extends BoFile{
-    static OnlyDirectory onlyDirectory = new OnlyDirectory();
+public class Bo2MusicLibrary extends BoFile {
     /*
     【音频】
      */
 
-    File libraryFile;
-    long qualityValue = 0l;
     List<Bo3MusicGroup> listGroup = new ArrayList<>();
+    List<Bo8OtherFile> listOtherFiles = new ArrayList<>();
     Bo1LibrarySet parentLibrarySet = null;
 
     public static boolean vertifyByName(String pathname) {
@@ -58,6 +56,30 @@ public class Bo2MusicLibrary  extends BoFile{
         calcuQuality();
     }
 
+    public List<Bo3MusicGroup> getListGroup() {
+        return listGroup;
+    }
+
+    public void setListGroup(List<Bo3MusicGroup> listGroup) {
+        this.listGroup = listGroup;
+    }
+
+    public List<Bo8OtherFile> getListOtherFiles() {
+        return listOtherFiles;
+    }
+
+    public void setListOtherFiles(List<Bo8OtherFile> listOtherFiles) {
+        this.listOtherFiles = listOtherFiles;
+    }
+
+    public Bo1LibrarySet getParentLibrarySet() {
+        return parentLibrarySet;
+    }
+
+    public void setParentLibrarySet(Bo1LibrarySet parentLibrarySet) {
+        this.parentLibrarySet = parentLibrarySet;
+    }
+
     public void calcuQuality() {
 
     }
@@ -72,8 +94,19 @@ public class Bo2MusicLibrary  extends BoFile{
 
     }
 
-    @Override
-    public Bo2MusicLibrary cycleCreate() {
-        return null;
+    public static Bo2MusicLibrary cycleCreate(Bo1LibrarySet inputParentLibrarySet, File inputPath) {
+        Bo2MusicLibrary library = new Bo2MusicLibrary(inputPath);
+        library.setParentLibrarySet(inputParentLibrarySet);
+        File[] paths = inputPath.listFiles(onlyDirectory);
+        for (File path : paths) {
+            Bo3MusicGroup bo3MusicGroup = Bo3MusicGroup.cycleCreate(library, path);
+            library.getListGroup().add(bo3MusicGroup);
+        }
+        File[] files = inputPath.listFiles(onlyFile);
+        for (File file : files) {
+            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+            library.getListOtherFiles().add(bo8OtherFile);
+        }
+        return library;
     }
 }

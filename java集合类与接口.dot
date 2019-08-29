@@ -1,0 +1,67 @@
+@startuml
+title ** 多环境功能测试数据示意图 ** \n\n
+
+interface Iterable<T>
+
+interface BeanContext
+
+interface BeanContextServices
+
+interface BlockingDeque<E>
+
+interface BlockingQueue<E>
+
+interface Collection<E>
+
+interface Deque<E>
+
+interface DirectoryStream<T>
+
+interface List<E>
+
+interface NavigableSet<E>
+
+interface Path
+
+interface Queue<E>
+
+interface SecureDirectoryStream<T>
+
+interface Set<E>
+
+interface SortedSet<E>
+
+interface TransferQueue<E>
+
+
+Iterable <|-- BlockingDeque
+Iterable <|-- BlockingQueue
+Iterable <|-- Collection
+Iterable <|-- Deque
+Iterable <|-- DirectoryStream
+Iterable <|-- List
+Iterable <|-- NavigableSet
+Iterable <|-- Path
+Iterable <|-- Queue
+Iterable <|-- SecureDirectoryStream
+Iterable <|-- Set
+Iterable <|-- SortedSet
+Iterable <|-- TransferQueue
+Iterable <|-- BeanContext
+Iterable <|-- BeanContextServices
+
+Collection <|-- BeanContext
+Collection <|-- BeanContextServices
+Collection <|-- BlockingDeque
+Collection <|-- BlockingQueue
+Collection <|-- Deque
+Collection <|-- List
+Collection <|-- NavigableSet
+Collection <|-- Queue
+Collection <|-- Set
+Collection <|-- SortedSet
+Collection <|-- TransferQueue
+
+Set <|-- NavigableSet
+Set <|-- SortedSet
+@enduml

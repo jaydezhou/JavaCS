@@ -26,6 +26,8 @@ public class RedmineIssue {
     private String parentId;
     private String trackerType;
     private String description;
+    private int lft;
+    private int rgt;
     private List<RedmineIssue> listSonIssues = new ArrayList<>();
     int issueLevel;
     private RedmineProject parentProject;

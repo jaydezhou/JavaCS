@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -14,13 +15,13 @@
         <module name="Jdk_Demo_Ensemble8" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="9">
-      <module name="JavaCS" target="1.9" />
-      <module name="JaydeApp" target="1.7" />
-      <module name="JaydeStudy" target="1.9" />
-      <module name="JaydeTest" target="1.9" />
-      <module name="JaydeUtil" target="1.9" />
-      <module name="Jdk_Demo_Ensemble8" target="1.9" />
+    <bytecodeTargetLevel target="8">
+      <module name="JavaCS" target="1.8" />
+      <module name="JaydeApp" target="1.8" />
+      <module name="JaydeStudy" target="1.8" />
+      <module name="JaydeTest" target="1.8" />
+      <module name="JaydeUtil" target="1.8" />
+      <module name="Jdk_Demo_Ensemble8" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

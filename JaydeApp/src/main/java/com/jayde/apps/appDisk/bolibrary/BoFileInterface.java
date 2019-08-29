@@ -19,5 +19,5 @@ public interface BoFileInterface {
 
     public void cycleCalculate();
 
-    public BoFile cycleCreate();
+//    public BoFile cycleCreate();
 }

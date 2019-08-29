@@ -167,7 +167,7 @@ public class CszxRedmineUtil {
             for (Issue issue : allTempOpendIssueNotRz) {
                 if (issue.getSubject().equals(userNameTempZxrw)) {
                     allTempOpendIssueNotRz.remove(issue);
-                    System.out.println("remove:"+issue);
+                    System.out.println("remove:" + issue);
                 }
             }
         }
@@ -192,15 +192,30 @@ public class CszxRedmineUtil {
 //                allOpendIssueNotRz.remove(issue);
 //            }
 //        }
-
         //已逾期的工作内容
         outMdText.append("\r\n");
         outMdText.append("#### 已逾期的工作任务：\r\n");
         for (Issue issue : allOpendIssueNotRz) {
+
+            Date startDate = issue.getStartDate();
+            LocalDate startLocalDate = null;
+            if (startDate == null) {
+                startLocalDate = LocalDate.of(1900, 1, 1);
+            } else {
+                startLocalDate = DateToLocal(startDate);
+            }
+            Date dueDate = issue.getDueDate();
+            LocalDate dueLocalDate = null;
+            if (dueDate == null) {
+                dueLocalDate = LocalDate.of(2100, 1, 1);
+            } else {
+                dueLocalDate = DateToLocal(dueDate);
+            }
+
             if (issue.getAssigneeId() == user.getId()) {
                 if (issue.getDoneRatio() < 100 || issue.getStatusId() == 1) {
                     if (issue.getDueDate() != null) {
-                        if (DateToLocal(issue.getDueDate()).isBefore(checkDate) || DateToLocal(issue.getDueDate()).isEqual(checkDate)) {
+                        if (dueLocalDate.isBefore(checkDate) || dueLocalDate.isEqual(checkDate)) {
                             outMdText.append(showIssueInfo(issue));
                         }
                     }
@@ -212,11 +227,27 @@ public class CszxRedmineUtil {
         outMdText.append("\r\n");
         outMdText.append("#### 进行中的工作任务：\r\n");
         for (Issue issue : allOpendIssueNotRz) {
+
+            Date startDate = issue.getStartDate();
+            LocalDate startLocalDate = null;
+            if (startDate == null) {
+                startLocalDate = LocalDate.of(1900, 1, 1);
+            } else {
+                startLocalDate = DateToLocal(startDate);
+            }
+            Date dueDate = issue.getDueDate();
+            LocalDate dueLocalDate = null;
+            if (dueDate == null) {
+                dueLocalDate = LocalDate.of(2100, 1, 1);
+            } else {
+                dueLocalDate = DateToLocal(dueDate);
+            }
+
             if (issue.getAssigneeId() == user.getId()) {
                 if (issue.getDoneRatio() < 100 || issue.getStatusId() == 1) {
                     if (issue.getStartDate() != null) {
-                        if (issue.getStartDate() == null || DateToLocal(issue.getStartDate()).isBefore(checkDate) || DateToLocal(issue.getStartDate()).isEqual(checkDate)) {
-                            if (issue.getDueDate() == null || DateToLocal(issue.getDueDate()).isAfter(checkDate) || DateToLocal(issue.getDueDate()).isEqual(checkDate)) {
+                        if (startLocalDate.isBefore(checkDate) || startLocalDate.isEqual(checkDate)) {
+                            if (dueLocalDate.isAfter(checkDate)) {
                                 outMdText.append(showIssueInfo(issue));
                             }
                         }
@@ -229,12 +260,28 @@ public class CszxRedmineUtil {
         outMdText.append("\r\n");
         outMdText.append("#### 将来的工作任务：\r\n");
         for (Issue issue : allOpendIssueNotRz) {
+
+            Date startDate = issue.getStartDate();
+            LocalDate startLocalDate = null;
+            if (startDate == null) {
+                startLocalDate = LocalDate.of(1900, 1, 1);
+            } else {
+                startLocalDate = DateToLocal(startDate);
+            }
+            Date dueDate = issue.getDueDate();
+            LocalDate dueLocalDate = null;
+            if (dueDate == null) {
+                dueLocalDate = LocalDate.of(2100, 1, 1);
+            } else {
+                dueLocalDate = DateToLocal(dueDate);
+            }
+
             if (issue.getAssigneeId() == user.getId()) {
                 if (issue.getDoneRatio() < 100 || issue.getStatusId() == 1) {
-                    if (issue.getStartDate() == null || DateToLocal(issue.getStartDate()).isAfter(checkDate)) {
-                        if (issue.getDueDate() == null || DateToLocal(issue.getDueDate()).isAfter(checkDate)) {
-                            outMdText.append(showIssueInfo(issue));
-                        }
+                    if (startLocalDate.isAfter(checkDate)) {
+//                        if (issue.getDueDate() == null || DateToLocal(issue.getDueDate()).isAfter(checkDate)) {
+                        outMdText.append(showIssueInfo(issue));
+//                        }
                     }
                 }
             }
@@ -252,9 +299,18 @@ public class CszxRedmineUtil {
         showIssueText.append(fromToDate(issue.getStartDate(), issue.getDueDate()));
         showIssueText.append("  状态：【");
         showIssueText.append(issue.getStatusName());
-        showIssueText.append("】  完成百分比【");
-        showIssueText.append(issue.getDoneRatio());
         showIssueText.append("】");
+        showIssueText.append("\r\n");
+        showIssueText.append("  完成百分比【");
+        showIssueText.append(issue.getDoneRatio());
+        showIssueText.append("%】");
+        int per = issue.getDoneRatio() / 10;
+        for (int i = 0; i < per; i++) {
+            showIssueText.append("■");
+        }
+        for (int j = 10; j > per; j--) {
+            showIssueText.append("□");
+        }
         showIssueText.append("\r\n");
         return showIssueText.toString();
     }

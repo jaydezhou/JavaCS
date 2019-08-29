@@ -9,7 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Font2D/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/SwingSet3/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="9.0" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

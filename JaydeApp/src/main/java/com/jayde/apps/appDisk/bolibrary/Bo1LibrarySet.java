@@ -34,23 +34,28 @@ public class Bo1LibrarySet extends BoFile {
     File librarySetFile;
     long qualityValue = 0l;
     List<Bo2MusicLibrary> listLibrary = new ArrayList<>();
+    List<Bo8OtherFile> listOtherFiles = new ArrayList<>();
 
     public void calcQuality() {
 
     }
 
     public Bo1LibrarySet(String inputLibrarySetPath) {
-        File file = new File(inputLibrarySetPath);
-        if (file.exists() == false) {
+        this(new File(inputLibrarySetPath));
+    }
+
+    public Bo1LibrarySet(File path) {
+
+        if (path.exists() == false) {
             return;
         }
-        if (file.getName().equals("标准文件夹") == false) {
+        if (path.getName().equals("标准文件夹") == false) {
             return;
         }
-        if (file.isDirectory() == false) {
+        if (path.isDirectory() == false) {
             return;
         }
-        File[] sonPaths = file.listFiles(new OnlyDirectory());
+        File[] sonPaths = path.listFiles(new OnlyDirectory());
         for (File sonPath : sonPaths) {
 //            System.out.println(sonPath);
             if (Bo2MusicLibrary.vertifyByName(sonPath.getName())) {
@@ -60,6 +65,38 @@ public class Bo1LibrarySet extends BoFile {
         }
 
         calcuQuality();
+    }
+
+    public File getLibrarySetFile() {
+        return librarySetFile;
+    }
+
+    public void setLibrarySetFile(File librarySetFile) {
+        this.librarySetFile = librarySetFile;
+    }
+
+    public long getQualityValue() {
+        return qualityValue;
+    }
+
+    public void setQualityValue(long qualityValue) {
+        this.qualityValue = qualityValue;
+    }
+
+    public List<Bo2MusicLibrary> getListLibrary() {
+        return listLibrary;
+    }
+
+    public void setListLibrary(List<Bo2MusicLibrary> listLibrary) {
+        this.listLibrary = listLibrary;
+    }
+
+    public List<Bo8OtherFile> getListOtherFiles() {
+        return listOtherFiles;
+    }
+
+    public void setListOtherFiles(List<Bo8OtherFile> listOtherFiles) {
+        this.listOtherFiles = listOtherFiles;
     }
 
     public void calcuQuality() {
@@ -80,8 +117,18 @@ public class Bo1LibrarySet extends BoFile {
 
     }
 
-    @Override
-    public Bo1LibrarySet cycleCreate() {
-        return null;
+    public static Bo1LibrarySet cycleCreate(File inputPath) {
+        Bo1LibrarySet librarySet = new Bo1LibrarySet(inputPath);
+        File[] paths = inputPath.listFiles(onlyDirectory);
+        for (File path : paths) {
+            Bo2MusicLibrary bo2MusicLibrary = Bo2MusicLibrary.cycleCreate(librarySet, path);
+            librarySet.getListLibrary().add(bo2MusicLibrary);
+        }
+        File[] files = inputPath.listFiles(onlyFile);
+        for (File file : files) {
+            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+            librarySet.getListOtherFiles().add(bo8OtherFile);
+        }
+        return librarySet;
     }
 }

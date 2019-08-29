@@ -204,7 +204,7 @@ public class RedmineDbUtil {
         List<RedmineProject> projectList = redmineDbUtil.listProjects();
         for (RedmineProject project : projectList) {
 //            log.info(project);
-//            if (project.getProjectId().equals("5")) {
+            if (project.getProjectName().equals("2.Personal")) {
             List<RedmineIssue> listRootIssue = redmineDbUtil.listRootIssues(project);
             for (RedmineIssue rootIssue : listRootIssue) {
                 redmineDbUtil.updateSortIssueBySubject(rootIssue, 1, 1);
@@ -223,7 +223,7 @@ public class RedmineDbUtil {
 //                        log.info(issue2);
 //                    }
 //                }
-//            }
+            }
         }
         redmineDbUtil.endConnection();
     }

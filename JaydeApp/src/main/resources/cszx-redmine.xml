@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
+    <!--uri="http://172.21.11.112:81/redmine"-->
     <project id="4"
              name="测试中心"
-             uri="http://172.21.11.112:81/redmine"
+             uri="http://127.0.0.1:8080/redmine"
              apiAccessKey="d4038e01167d0109bbcf854d1937f72b859fb184"
              projectKey="cszx"/>
     <statuses>

@@ -24,6 +24,7 @@ public class Bo8MusicFile extends BoFile {
     long fileSize;
     Bo7MusicCd parentCd = null;
     int mediaType = 0;
+    BoMusicQuality quality;
 
     public Bo8MusicFile(File inputFile, Bo7MusicCd inputParent) {
         selfFile = inputFile;
@@ -37,11 +38,10 @@ public class Bo8MusicFile extends BoFile {
 
     @Override
     public void cycleCalculate() {
-
+        calculate();
     }
 
-    @Override
-    public Bo8MusicFile cycleCreate() {
+    public static Bo8MusicFile cycleCreate() {
         return null;
     }
 }

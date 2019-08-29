@@ -19,11 +19,10 @@ import java.util.List;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class Bo4MusicType  extends BoFile{
-    static OnlyDirectory onlyDirectory = new OnlyDirectory();
+public class Bo4MusicType extends BoFile {
     List<Bo5MusicSinger> listSinger = new ArrayList<>();
+    List<Bo8OtherFile> listOtherFiles = new ArrayList<>();
     Bo3MusicGroup parentGroup = null;
-    int mediaType = 0;
 
     public static boolean vertifyByName(String pathname) {
         if (pathname.startsWith("【类】"))
@@ -31,6 +30,7 @@ public class Bo4MusicType  extends BoFile{
         else
             return false;
     }
+
     public Bo4MusicType(File inputTypepPath) {
         if (inputTypepPath.exists() == false) {
             return;
@@ -53,7 +53,31 @@ public class Bo4MusicType  extends BoFile{
         calcuQuality();
     }
 
-    public void calcuQuality(){
+    public List<Bo5MusicSinger> getListSinger() {
+        return listSinger;
+    }
+
+    public void setListSinger(List<Bo5MusicSinger> listSinger) {
+        this.listSinger = listSinger;
+    }
+
+    public List<Bo8OtherFile> getListOtherFiles() {
+        return listOtherFiles;
+    }
+
+    public void setListOtherFiles(List<Bo8OtherFile> listOtherFiles) {
+        this.listOtherFiles = listOtherFiles;
+    }
+
+    public Bo3MusicGroup getParentGroup() {
+        return parentGroup;
+    }
+
+    public void setParentGroup(Bo3MusicGroup parentGroup) {
+        this.parentGroup = parentGroup;
+    }
+
+    public void calcuQuality() {
 
     }
 
@@ -67,8 +91,19 @@ public class Bo4MusicType  extends BoFile{
 
     }
 
-    @Override
-    public Bo4MusicType cycleCreate() {
-        return null;
+    public static Bo4MusicType cycleCreate(Bo3MusicGroup inputParentGroup, File inputPath) {
+        Bo4MusicType type = new Bo4MusicType(inputPath);
+        type.setParentGroup(inputParentGroup);
+        File[] paths = inputPath.listFiles(onlyDirectory);
+        for (File path : paths) {
+            Bo5MusicSinger bo5MusicSinger = Bo5MusicSinger.cycleCreate(type, path);
+            type.getListSinger().add(bo5MusicSinger);
+        }
+        File[] files = inputPath.listFiles(onlyFile);
+        for (File file : files) {
+            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+            type.getListOtherFiles().add(bo8OtherFile);
+        }
+        return type;
     }
 }

@@ -1,5 +1,8 @@
 package com.jayde.apps.appDisk.bolibrary;
 
+import com.jayde.util.diskutils.OnlyDirectory;
+import com.jayde.util.diskutils.OnlyFile;
+
 import java.io.File;
 
 /**
@@ -37,6 +40,9 @@ public abstract class BoFile implements BoFileInterface {
     float scoretotal;
     boolean calculated = false;
 
+    static OnlyDirectory onlyDirectory = new OnlyDirectory();
+    static OnlyFile onlyFile = new OnlyFile();
+
     public BoFile() {
         System.out.println("blank constract");
     }
@@ -50,6 +56,7 @@ public abstract class BoFile implements BoFileInterface {
     }
 
     public float getScoretotal() {
+        scoretotal = 0f;
         return scoretotal;
     }
 
@@ -73,4 +80,7 @@ public abstract class BoFile implements BoFileInterface {
         this.selfFile = selfFile;
     }
 
+    public static int getFileType(File inputFile) {
+        return 1;
+    }
 }

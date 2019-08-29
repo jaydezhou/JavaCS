@@ -17,7 +17,12 @@ import java.io.File;
  */
 public class Bo8OtherFile extends BoFile {
     Bo7MusicCd parentCd = null;
+    BoMusicQuality quality;
 
+    public Bo8OtherFile(File inputFile) {
+        selfFile = inputFile;
+        parentCd = null;
+    }
     public Bo8OtherFile(File inputFile, Bo7MusicCd inputParent) {
         selfFile = inputFile;
         parentCd = inputParent;
@@ -30,11 +35,10 @@ public class Bo8OtherFile extends BoFile {
 
     @Override
     public void cycleCalculate() {
-
+        calculate();
     }
 
-    @Override
-    public Bo8OtherFile cycleCreate() {
+    public static Bo8OtherFile cycleCreate() {
         return null;
     }
 }

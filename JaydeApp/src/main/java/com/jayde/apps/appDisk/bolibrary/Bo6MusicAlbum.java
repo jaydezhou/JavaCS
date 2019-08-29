@@ -19,11 +19,10 @@ import java.util.List;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class Bo6MusicAlbum  extends BoFile{
-    static OnlyDirectory onlyDirectory = new OnlyDirectory();
+public class Bo6MusicAlbum extends BoFile {
     List<Bo7MusicCd> listCd = new ArrayList<>();
+    List<Bo8OtherFile> listOtherFiles = new ArrayList<>();
     Bo5MusicSinger parentSinger = null;
-    int mediaType = 0;
 
     public static boolean vertifyByName(String pathname) {
         if (pathname.startsWith("【专辑"))
@@ -31,6 +30,7 @@ public class Bo6MusicAlbum  extends BoFile{
         else
             return false;
     }
+
     public Bo6MusicAlbum(File inputAlbumPath) {
         if (inputAlbumPath.exists() == false) {
             return;
@@ -52,7 +52,31 @@ public class Bo6MusicAlbum  extends BoFile{
         calcuQuality();
     }
 
-    public void calcuQuality(){
+    public List<Bo7MusicCd> getListCd() {
+        return listCd;
+    }
+
+    public void setListCd(List<Bo7MusicCd> listCd) {
+        this.listCd = listCd;
+    }
+
+    public List<Bo8OtherFile> getListOtherFiles() {
+        return listOtherFiles;
+    }
+
+    public void setListOtherFiles(List<Bo8OtherFile> listOtherFiles) {
+        this.listOtherFiles = listOtherFiles;
+    }
+
+    public Bo5MusicSinger getParentSinger() {
+        return parentSinger;
+    }
+
+    public void setParentSinger(Bo5MusicSinger parentSinger) {
+        this.parentSinger = parentSinger;
+    }
+
+    public void calcuQuality() {
 
     }
 
@@ -66,8 +90,19 @@ public class Bo6MusicAlbum  extends BoFile{
 
     }
 
-    @Override
-    public Bo6MusicAlbum cycleCreate() {
-        return null;
+    public static Bo6MusicAlbum cycleCreate(Bo5MusicSinger inputParentSinger, File inputPath) {
+        Bo6MusicAlbum album = new Bo6MusicAlbum(inputPath);
+        album.setParentSinger(inputParentSinger);
+        File[] paths = inputPath.listFiles(onlyDirectory);
+        for (File path : paths) {
+            Bo7MusicCd bo7MusicCd = Bo7MusicCd.cycleCreate(album, path);
+            album.getListCd().add(bo7MusicCd);
+        }
+        File[] files = inputPath.listFiles(onlyFile);
+        for (File file : files) {
+            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+            album.getListOtherFiles().add(bo8OtherFile);
+        }
+        return album;
     }
 }
