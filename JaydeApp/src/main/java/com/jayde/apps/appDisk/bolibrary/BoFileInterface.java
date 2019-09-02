@@ -15,9 +15,10 @@ package com.jayde.apps.appDisk.bolibrary;
  */
 public interface BoFileInterface {
 
-    public void calculate();
+    public float calculate();
 
-    public void cycleCalculate();
+    public float cycleCalculate();
 
+    public void cycleShowTree();
 //    public BoFile cycleCreate();
 }

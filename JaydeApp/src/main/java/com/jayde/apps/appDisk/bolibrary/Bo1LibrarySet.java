@@ -3,6 +3,7 @@ package com.jayde.apps.appDisk.bolibrary;
 
 import com.jayde.util.diskutils.OnlyDirectory;
 
+import javax.naming.InitialContext;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class Bo1LibrarySet extends BoFile {
 
     public Bo1LibrarySet(File path) {
 
+        setSelfFile(path);
         if (path.exists() == false) {
             return;
         }
@@ -55,15 +57,6 @@ public class Bo1LibrarySet extends BoFile {
         if (path.isDirectory() == false) {
             return;
         }
-        File[] sonPaths = path.listFiles(new OnlyDirectory());
-        for (File sonPath : sonPaths) {
-//            System.out.println(sonPath);
-            if (Bo2MusicLibrary.vertifyByName(sonPath.getName())) {
-                System.out.println("   Library:" + sonPath.getName());
-                listLibrary.add(new Bo2MusicLibrary(sonPath));
-            }
-        }
-
         calcuQuality();
     }
 
@@ -104,17 +97,20 @@ public class Bo1LibrarySet extends BoFile {
     }
 
     public static void main(String[] args) {
-        Bo1LibrarySet librarySet = new Bo1LibrarySet("/Users/mac/Desktop/标准文件夹");
+        Bo1LibrarySet librarySet = Bo1LibrarySet.cycleCreate(new File("/Users/mac/Desktop/标准文件夹"));
+        librarySet.cycleCalculate();
+        librarySet.cycleShowTree();
+//        librarySet.cycleCalculate();
     }
 
     @Override
-    public void calculate() {
-
+    public float calculate() {
+        return 0f;
     }
 
     @Override
-    public void cycleCalculate() {
-
+    public float cycleCalculate() {
+        return UtilMusic.cycleCalculate(this);
     }
 
     public static Bo1LibrarySet cycleCreate(File inputPath) {
@@ -126,9 +122,25 @@ public class Bo1LibrarySet extends BoFile {
         }
         File[] files = inputPath.listFiles(onlyFile);
         for (File file : files) {
-            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
-            librarySet.getListOtherFiles().add(bo8OtherFile);
+            if (BoFile.getFileType(file) != BoFile.MUSIC_OSFILE) {
+                Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+                librarySet.getListOtherFiles().add(bo8OtherFile);
+            }
         }
+
         return librarySet;
     }
+
+    public void cycleShowTree() {
+        System.out.print(BoFile.TREE_BLANK1);
+        System.out.println(this);
+        for (Bo2MusicLibrary library : listLibrary) {
+            library.cycleShowTree();
+        }
+        for (Bo8OtherFile otherFile : listOtherFiles) {
+            System.out.print(BoFile.TREE_BLANK2);
+            System.out.println(otherFile);
+        }
+    }
+
 }

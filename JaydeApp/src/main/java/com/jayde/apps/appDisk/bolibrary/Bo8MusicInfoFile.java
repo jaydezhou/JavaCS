@@ -25,13 +25,19 @@ public class Bo8MusicInfoFile extends BoFile {
     }
 
     @Override
-    public void calculate() {
-
+    public float calculate() {
+        return 0f;
     }
 
     @Override
-    public void cycleCalculate() {
+    public float cycleCalculate() {
         calculate();
+        return scoretotal;
+    }
+
+    @Override
+    public void cycleShowTree() {
+
     }
 
     public static Bo8MusicInfoFile cycleCreate() {

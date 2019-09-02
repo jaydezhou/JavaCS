@@ -29,14 +29,25 @@ public class Bo8OtherFile extends BoFile {
     }
 
     @Override
-    public void calculate() {
-
+    public float calculate() {
+        return 0f;
     }
 
     @Override
-    public void cycleCalculate() {
+    public float cycleCalculate() {
         calculate();
+        return scoretotal;
     }
+
+    @Override
+    public void cycleShowTree() {
+
+    }
+
+//    @Override
+//    public String toString() {
+//        return selfFile.getName();
+//    }
 
     public static Bo8OtherFile cycleCreate() {
         return null;

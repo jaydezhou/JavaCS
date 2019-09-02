@@ -32,6 +32,7 @@ public class Bo5MusicSinger extends BoFile {
     }
 
     public Bo5MusicSinger(File inputSingerPath) {
+        setSelfFile(inputSingerPath);
         if (inputSingerPath.exists() == false) {
             return;
         }
@@ -41,14 +42,13 @@ public class Bo5MusicSinger extends BoFile {
         if (inputSingerPath.isDirectory() == false) {
             return;
         }
-        File[] sonPaths = inputSingerPath.listFiles(onlyDirectory);
-        for (File sonPath : sonPaths) {
-            if (Bo6MusicAlbum.vertifyByName(sonPath.getName())) {
-                System.out.println("              Album:" + sonPath.getName());
-                listAlbum.add(new Bo6MusicAlbum(sonPath));
-            }
-        }
-
+//        File[] sonPaths = inputSingerPath.listFiles(onlyDirectory);
+//        for (File sonPath : sonPaths) {
+//            if (Bo6MusicAlbum.vertifyByName(sonPath.getName())) {
+//                System.out.println("              Album:" + sonPath.getName());
+//                listAlbum.add(new Bo6MusicAlbum(sonPath));
+//            }
+//        }
         calcuQuality();
     }
 
@@ -81,13 +81,25 @@ public class Bo5MusicSinger extends BoFile {
     }
 
     @Override
-    public void calculate() {
-
+    public float calculate() {
+        return 0f;
     }
 
     @Override
-    public void cycleCalculate() {
-
+    public float cycleCalculate() {
+        int allCount = listAlbum.size() + listOtherFiles.size() + 1;
+        for (Bo6MusicAlbum album: listAlbum) {
+            scoretotal = scoretotal + album.cycleCalculate();
+        }
+        for (Bo8OtherFile otherFile : listOtherFiles) {
+            scoretotal = scoretotal + 0f;
+        }
+        //自身的名字分数
+        if (selfFile.getName().startsWith("【歌手】")) {
+            scoretotal = scoretotal + 100f;
+        }
+        scoretotal = scoretotal / allCount;
+        return scoretotal;
     }
 
     public static Bo5MusicSinger cycleCreate(Bo4MusicType inputParentType, File inputPath) {
@@ -100,9 +112,24 @@ public class Bo5MusicSinger extends BoFile {
         }
         File[] files = inputPath.listFiles(onlyFile);
         for (File file : files) {
-            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
-            singer.getListOtherFiles().add(bo8OtherFile);
+            if (BoFile.getFileType(file) != BoFile.MUSIC_OSFILE) {
+                Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+                singer.getListOtherFiles().add(bo8OtherFile);
+            }
         }
         return singer;
+    }
+
+    @Override
+    public void cycleShowTree() {
+        System.out.print(BoFile.TREE_BLANK5);
+        System.out.println(this);
+        for (Bo6MusicAlbum album : listAlbum) {
+            album.cycleShowTree();
+        }
+        for (Bo8OtherFile otherFile : listOtherFiles) {
+            System.out.print(BoFile.TREE_BLANK6);
+            System.out.println(otherFile);
+        }
     }
 }

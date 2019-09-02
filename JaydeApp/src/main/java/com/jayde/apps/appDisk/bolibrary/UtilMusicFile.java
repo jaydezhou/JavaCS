@@ -125,15 +125,5 @@ public class UtilMusicFile {
         return tag;
     }
 
-    //只要有繁体，就判定为繁体。因为有些字，简体和繁体是一样的。比如“定影”。如果是这样的字，优先判定为简体。
-    private static void isSimpleOrComplex(String str, String encode) {
-        try {
-            if (str.equals(new String(str.getBytes(encode), encode))) {
-                System.out.println(str + "---是简体");
-            } else {
-                System.out.println(str + "---是繁体");
-            }
-        } catch (Exception e) {
-        }
-    }
+
 }

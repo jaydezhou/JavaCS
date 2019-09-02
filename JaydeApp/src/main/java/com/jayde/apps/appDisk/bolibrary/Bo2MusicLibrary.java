@@ -36,6 +36,7 @@ public class Bo2MusicLibrary extends BoFile {
     }
 
     public Bo2MusicLibrary(File inputLibraryPath) {
+        setSelfFile(inputLibraryPath);
         if (inputLibraryPath.exists() == false) {
             return;
         }
@@ -45,14 +46,13 @@ public class Bo2MusicLibrary extends BoFile {
         if (inputLibraryPath.isDirectory() == false) {
             return;
         }
-        File[] sonPaths = inputLibraryPath.listFiles(onlyDirectory);
-        for (File sonPath : sonPaths) {
-            if (Bo3MusicGroup.vertifyByName(sonPath.getName())) {
-                System.out.println("      Group:" + sonPath.getName());
-                listGroup.add(new Bo3MusicGroup(sonPath));
-            }
-        }
-
+//        File[] sonPaths = inputLibraryPath.listFiles(onlyDirectory);
+//        for (File sonPath : sonPaths) {
+//            if (Bo3MusicGroup.vertifyByName(sonPath.getName())) {
+//                System.out.println("      Group:" + sonPath.getName());
+//                listGroup.add(new Bo3MusicGroup(sonPath));
+//            }
+//        }
         calcuQuality();
     }
 
@@ -85,13 +85,25 @@ public class Bo2MusicLibrary extends BoFile {
     }
 
     @Override
-    public void calculate() {
-
+    public float calculate() {
+        return 0f;
     }
 
     @Override
-    public void cycleCalculate() {
-
+    public float cycleCalculate() {
+        int allCount = listGroup.size() + listOtherFiles.size() + 1;
+        for (Bo3MusicGroup group : listGroup) {
+            scoretotal = scoretotal + group.cycleCalculate();
+        }
+        for (Bo8OtherFile otherFile : listOtherFiles) {
+            scoretotal = scoretotal + 0f;
+        }
+        //自身的名字分数
+        if (selfFile.getName().equals("【音频】")) {
+            scoretotal = scoretotal + 100f;
+        }
+        scoretotal = scoretotal / allCount;
+        return scoretotal;
     }
 
     public static Bo2MusicLibrary cycleCreate(Bo1LibrarySet inputParentLibrarySet, File inputPath) {
@@ -104,9 +116,23 @@ public class Bo2MusicLibrary extends BoFile {
         }
         File[] files = inputPath.listFiles(onlyFile);
         for (File file : files) {
-            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
-            library.getListOtherFiles().add(bo8OtherFile);
+            if (BoFile.getFileType(file) != BoFile.MUSIC_OSFILE) {
+                Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
+                library.getListOtherFiles().add(bo8OtherFile);
+            }
         }
         return library;
+    }
+
+    public void cycleShowTree() {
+        System.out.print(BoFile.TREE_BLANK2);
+        System.out.println(this);
+        for (Bo3MusicGroup group : listGroup) {
+            group.cycleShowTree();
+        }
+        for (Bo8OtherFile otherFile : listOtherFiles) {
+            System.out.print(BoFile.TREE_BLANK3);
+            System.out.println(otherFile);
+        }
     }
 }

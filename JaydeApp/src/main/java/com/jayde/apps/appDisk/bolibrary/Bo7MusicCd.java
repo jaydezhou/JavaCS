@@ -1,8 +1,5 @@
 package com.jayde.apps.appDisk.bolibrary;
 
-import com.jayde.util.diskutils.OnlyDirectory;
-import com.jayde.util.diskutils.OnlyFile;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +38,7 @@ public class Bo7MusicCd extends BoFile {
     }
 
     public Bo7MusicCd(File inputCdPath) {
+        setSelfFile(inputCdPath);
         if (inputCdPath.exists() == false) {
             return;
         }
@@ -50,19 +48,18 @@ public class Bo7MusicCd extends BoFile {
         if (inputCdPath.isDirectory() == false) {
             return;
         }
-        File[] sonFiles = inputCdPath.listFiles(onlyFile);
-        for (File sonFile : sonFiles) {
-            System.out.println("                  File:" + sonFile.getName());
-            if (UtilMusicFile.isMusicFile(sonFile)) {
-                listMusicFile.add(new Bo8MusicFile(sonFile, this));
-            }
-            listMusicOtherFile.add(new Bo8OtherFile(sonFile, this));
-        }
-        File[] sonPaths = inputCdPath.listFiles(onlyDirectory);
-        for (File sonPath : sonPaths) {
-            listMusicOtherFile.add(new Bo8OtherFile(sonPath, this));
-        }
-
+//        File[] sonFiles = inputCdPath.listFiles(onlyFile);
+//        for (File sonFile : sonFiles) {
+//            System.out.println("                  File:" + sonFile.getName());
+//            if (UtilMusicFile.isMusicFile(sonFile)) {
+//                listMusicFile.add(new Bo8MusicFile(sonFile, this));
+//            }
+//            listMusicOtherFile.add(new Bo8OtherFile(sonFile, this));
+//        }
+//        File[] sonPaths = inputCdPath.listFiles(onlyDirectory);
+//        for (File sonPath : sonPaths) {
+//            listMusicOtherFile.add(new Bo8OtherFile(sonPath, this));
+//        }
         calcuQuality();
     }
 
@@ -107,12 +104,13 @@ public class Bo7MusicCd extends BoFile {
     }
 
     @Override
-    public void calculate() {
-
+    public float calculate() {
+        return 0f;
     }
 
     @Override
-    public void cycleCalculate() {
+    public float cycleCalculate() {
+        return scoretotal;
 
     }
 
@@ -127,20 +125,40 @@ public class Bo7MusicCd extends BoFile {
         File[] files = inputPath.listFiles(onlyFile);
         for (File file : files) {
             int filetype = BoFile.getFileType(file);
-            switch (filetype) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
-                    break;
+            if (filetype == BoFile.MUSIC_FILE) {
+                Bo8MusicFile musicFile = new Bo8MusicFile(file, cd);
+                cd.getListMusicFile().add(musicFile);
+            }
+            if (filetype == BoFile.Music_INFOFILE) {
+                Bo8MusicInfoFile musicInfoFile = new Bo8MusicInfoFile(file, cd);
+                cd.getListMusicInfoFile().add(musicInfoFile);
+            }
+            if (filetype == BoFile.MUSIC_OTHERFILE) {
+                Bo8OtherFile otherFile = new Bo8OtherFile(file, cd);
+                cd.getListMusicOtherFile().add(otherFile);
             }
 //            Bo8OtherFile bo8OtherFile = new Bo8OtherFile(file);
 //            album.getListOtherFiles().add(bo8OtherFile);
         }
         return cd;
+    }
+
+    @Override
+    public void cycleShowTree() {
+        System.out.print(BoFile.TREE_BLANK7);
+        System.out.println(this);
+        for (Bo8MusicFile musicFile : listMusicFile) {
+            System.out.print(BoFile.TREE_BLANK8);
+            System.out.println(musicFile);
+        }
+        for (Bo8MusicInfoFile musicInfoFile : listMusicInfoFile) {
+            System.out.print(BoFile.TREE_BLANK8);
+            System.out.println(musicInfoFile);
+        }
+        for (Bo8OtherFile otherFile : listMusicOtherFile) {
+            System.out.print(BoFile.TREE_BLANK8);
+            System.out.println(otherFile);
+        }
     }
 }
 

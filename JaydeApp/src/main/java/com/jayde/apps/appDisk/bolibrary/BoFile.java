@@ -19,22 +19,30 @@ import java.io.File;
  * <p>Copyright: Copyright (c) 2019</p>
  */
 public abstract class BoFile implements BoFileInterface {
-    public static int MUSIC_LIBRARYSET = 1;
-    public static int MUSIC_LIBRARY = 2;
-    public static int MUSIC_TYPE = 3;
-    public static int MUSIC_GROUP = 4;
-    public static int MUSIC_SINGER = 5;
-    public static int MUSIC_ALBUM = 6;
-    public static int MUSIC_CD = 7;
-    public static int MUSIC_FILE = 8;
-    public static int Music_INFOFILE = 9;
-    public static int MUSIC_OTHERFILE = 10;
+    public static final int MUSIC_LIBRARYSET = 1;
+    public static final int MUSIC_LIBRARY = 2;
+    public static final int MUSIC_TYPE = 3;
+    public static final int MUSIC_GROUP = 4;
+    public static final int MUSIC_SINGER = 5;
+    public static final int MUSIC_ALBUM = 6;
+    public static final int MUSIC_CD = 7;
+    public static final int MUSIC_FILE = 8;
+    public static final int Music_INFOFILE = 9;
+    public static final int MUSIC_OTHERFILE = 10;
+    public static final int MUSIC_OSFILE = 11;
 
-    public static int MUSIC_MEDIA_MP3 = 1;
-    public static int MUSIC_MEDIA_HIFI = 2;
-    public static int MUSIC_MEDIA_51 = 3;
-    public static int MUSIC_MEDIA_DSD = 4;
-
+    public static final int MUSIC_MEDIA_MP3 = 1;
+    public static final int MUSIC_MEDIA_HIFI = 2;
+    public static final int MUSIC_MEDIA_51 = 3;
+    public static final int MUSIC_MEDIA_DSD = 4;
+    public static final String TREE_BLANK1 = "    ";
+    public static final String TREE_BLANK2 = "        ";
+    public static final String TREE_BLANK3 = "            ";
+    public static final String TREE_BLANK4 = "                ";
+    public static final String TREE_BLANK5 = "                    ";
+    public static final String TREE_BLANK6 = "                        ";
+    public static final String TREE_BLANK7 = "                            ";
+    public static final String TREE_BLANK8 = "                                ";
     File selfFile;
     int type;
     float scoretotal;
@@ -44,7 +52,7 @@ public abstract class BoFile implements BoFileInterface {
     static OnlyFile onlyFile = new OnlyFile();
 
     public BoFile() {
-        System.out.println("blank constract");
+//        System.out.println("blank constract");
     }
 
     public int getType() {
@@ -81,6 +89,97 @@ public abstract class BoFile implements BoFileInterface {
     }
 
     public static int getFileType(File inputFile) {
-        return 1;
+        if (inputFile.isDirectory()) {
+            return BoFile.MUSIC_OTHERFILE;
+        }
+        if (inputFile.getName().equals(".DS_Store")) {
+            return BoFile.MUSIC_OSFILE;
+        }
+        String suffix = getFileSuffix(inputFile);
+        switch (suffix) {
+            case "FLAC": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "MP3": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "DTS": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "DFF": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "WAV": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "APE": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "M4A": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "AAC": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "ACC": {
+                return BoFile.MUSIC_FILE;
+            }
+            case "CUE": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "LRC": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "SRT": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "UTF": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "KSC": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "SSA": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "ASS": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "SMI": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "JPG": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "JPEG": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "BMP": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "GIF": {
+                return BoFile.Music_INFOFILE;
+            }
+            case "PNG": {
+                return BoFile.Music_INFOFILE;
+            }
+            default: {
+                return BoFile.MUSIC_OTHERFILE;
+            }
+        }
+    }
+
+    public static String getFileSuffix(File file) {
+        String filename = file.getName();
+        if (filename.contains(".") == false) {
+            return "";
+        }
+        String[] subs = filename.split("\\.");
+        return subs[subs.length - 1].toUpperCase();
+    }
+
+    @Override
+    public String toString() {
+        return selfFile.getName() + "  " + scoretotal;
     }
 }
