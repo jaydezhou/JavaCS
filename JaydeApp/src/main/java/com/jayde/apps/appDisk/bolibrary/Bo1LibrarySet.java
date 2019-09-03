@@ -98,6 +98,7 @@ public class Bo1LibrarySet extends BoFile {
 
     public static void main(String[] args) {
         Bo1LibrarySet librarySet = Bo1LibrarySet.cycleCreate(new File("/Users/mac/Desktop/标准文件夹"));
+//        Bo1LibrarySet librarySet = Bo1LibrarySet.cycleCreate(new File("/Volumes/MusicP5T/标准文件夹"));
         librarySet.cycleCalculate();
         librarySet.cycleShowTree();
 //        librarySet.cycleCalculate();

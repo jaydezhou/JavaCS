@@ -43,6 +43,10 @@ public abstract class BoFile implements BoFileInterface {
     public static final String TREE_BLANK6 = "                        ";
     public static final String TREE_BLANK7 = "                            ";
     public static final String TREE_BLANK8 = "                                ";
+
+    public static final String[] MUSIC_FILE_TYPES = {"MP3", "FLAC", "DTS", "DFF", "WAV", "APE", "M4A", "ACC"};
+    public static final String[] MUSIC_LYRICS_TYPES = {"LRC", "SRT", "UTF", "KSC", "SSA", "ASS", "SMI"};
+
     File selfFile;
     int type;
     float scoretotal;

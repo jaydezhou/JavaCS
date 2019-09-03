@@ -1,5 +1,6 @@
 package com.jayde.apps.appDisk.bolibrary;
 
+import org.jaudiotagger.audio.wav.WavTag;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.jaudiotagger.tag.flac.FlacTag;
@@ -293,11 +294,29 @@ public class CommonTag {
         }else{
             setIMAGE(false);
         }
-//        for (Artwork artwork : list) {
-//            System.out.println("Artwork:  "+artwork.getPictureType()+"   size:"+artwork.getBinaryData().length);
-//
-//        }
+    }
 
+    public CommonTag(String inputFilename, WavTag wavTag) {
+        filename = inputFilename;
+//        setALBUM(v24Tag.getFirst(FieldKey.ALBUM));
+//        setALBUMARTIST(v24Tag.getFirst(FieldKey.ALBUM_ARTIST));
+//        setTITLE(v24Tag.getFirst(FieldKey.TITLE));
+//        setARTIST(v24Tag.getFirst(FieldKey.ARTIST));
+//        setTRACKNUMBER(v24Tag.getFirst(FieldKey.TRACK));
+//        setTRACKTOTAL(v24Tag.getFirst(FieldKey.TRACK_TOTAL));
+//        setDISCNUMBER(v24Tag.getFirst(FieldKey.DISC_NO));
+//        setDISCTOTAL(v24Tag.getFirst(FieldKey.DISC_TOTAL));
+//        setDATE(v24Tag.getFirst(FieldKey.YEAR));
+//        setGENRE(v24Tag.getFirst(FieldKey.GENRE));
+//        setCOMMENT(v24Tag.getFirst(FieldKey.COMMENT));
+//        setLANGUAGE(v24Tag.getFirst(FieldKey.LANGUAGE));
+//        setLYRICS(v24Tag.getFirst(FieldKey.LYRICS));
+//        List<Artwork> list = v24Tag.getArtworkList();
+//        if(list!=null && list.size()>0){
+//            setIMAGE(true);
+//        }else{
+//            setIMAGE(false);
+//        }
     }
 
 }

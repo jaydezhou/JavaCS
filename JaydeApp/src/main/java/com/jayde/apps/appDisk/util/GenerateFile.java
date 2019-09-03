@@ -292,7 +292,7 @@ public class GenerateFile {
 
     public static void main(String[] args) throws DocumentException {
 //        File diskpath = new File("/Volumes/ps_mac");
-        File diskpath = new File("/Volumes/SS4");
+        File diskpath = new File("/Users/mac/Desktop/标准文件夹");
 //        File diskpath = new File("/Volumes/Passport_MP3");
         File filepath = new File("/Users/mac/Documents/diskpath");
         try {
