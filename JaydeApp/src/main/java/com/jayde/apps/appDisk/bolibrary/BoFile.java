@@ -175,11 +175,29 @@ public abstract class BoFile implements BoFileInterface {
 
     public static String getFileSuffix(File file) {
         String filename = file.getName();
+        return getFileSuffix(filename);
+    }
+
+    public static String getFileSuffix(String filename) {
         if (filename.contains(".") == false) {
             return "";
         }
         String[] subs = filename.split("\\.");
         return subs[subs.length - 1].toUpperCase();
+    }
+
+    public static boolean isMusicFileType(String filename) {
+        if (filename.contains(".") == false) {
+            return false;
+        }
+        String[] subs = filename.split("\\.");
+        String suffix = subs[subs.length - 1].toUpperCase();
+        for (String type : MUSIC_FILE_TYPES) {
+            if (suffix.equals(type)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

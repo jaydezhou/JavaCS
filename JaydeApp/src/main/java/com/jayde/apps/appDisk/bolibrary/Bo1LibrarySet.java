@@ -144,4 +144,14 @@ public class Bo1LibrarySet extends BoFile {
         }
     }
 
+    public static boolean isLibrarySet(String inputFileName) {
+        if (inputFileName.startsWith("标准文件夹")) {
+            if (inputFileName.endsWith("]")) {
+                if (inputFileName.contains("[")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

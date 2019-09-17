@@ -13,14 +13,59 @@ package com.jayde.apps.appDisk.bolibrary;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public interface AbstractFile {
+public class AbstractFile {
+    String id;
+    String pid;
+    String name;
+    int type;
+    long modifyDate;
+    String attributes;
 
-    String getFileName();
-    void setFileName();
-    long getFileSize();
-    void setFileSize();
+    public String getId() {
+        return id;
+    }
 
-    long getQuality();
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getPid() {
+        return pid;
+    }
 
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public long getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(long modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public String getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String attributes) {
+        this.attributes = attributes;
+    }
 }

@@ -1,5 +1,6 @@
 package com.jayde.apps.appDisk.bolibrary;
 
+import com.jayde.apps.appDisk.bodisk.CommonTag;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
@@ -296,6 +297,8 @@ class UtilVertifyTag {
 }
 
 class UtilCommon {
+
+
     //只要有繁体，就判定为繁体。因为有些字，简体和繁体是一样的。比如“定影”。如果是这样的字，优先判定为简体。
     public static boolean isSimple(String str) {
         try {
@@ -316,6 +319,10 @@ class UtilCommon {
 class UtilMusicFileInfo {
 
     public static AudioHeader getHeader(File file) {
+        String suffix = BoFile.getFileSuffix(file);
+        if (suffix.equals("APE")) {
+            return null;
+        }
         try {
             AudioFile f = AudioFileIO.read(file);
             AudioHeader audioHeader = f.getAudioHeader();
@@ -336,13 +343,17 @@ class UtilMusicFileInfo {
 
     public static boolean isMusicFile(File file) {
         if (file.exists() && file.length() > 0) {
-            String filenameupper = file.getName().toUpperCase();
-            for (String suffix : BoFile.MUSIC_FILE_TYPES) {
-                if (filenameupper.endsWith(suffix)) {
-                    return true;
-                }
+            return isMusicFile(file.getName());
+        }
+        return false;
+    }
+
+    public static boolean isMusicFile(String filename) {
+        String filesuffix = BoFile.getFileSuffix(filename);
+        for (String suffix : BoFile.MUSIC_FILE_TYPES) {
+            if (filesuffix.equals(suffix)) {
+                return true;
             }
-            return false;
         }
         return false;
     }
@@ -371,6 +382,15 @@ class UtilMusicFileInfo {
     }
 
     public static CommonTag getCommonTag(File file) {
+        String suffix = BoFile.getFileSuffix(file);
+        if (suffix.equals("MP3")) {
+            CommonTag mp3Tag = getMusicMp3Tag(file);
+            return mp3Tag;
+        }
+        if (suffix.equals("FLAC")) {
+            CommonTag flacTag = getMusicFlacTag(file);
+            return flacTag;
+        }
         return null;
     }
 

@@ -3,6 +3,8 @@ package com.jayde.apps.appDisk.util;
 import com.jayde.apps.appDisk.bolibrary.UtilDiskXml;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,8 @@ import java.io.File;
  * <p>Copyright: Copyright (c) 2019</p>
  */
 public class DiskXmlUI extends JPanel {
+    boolean onlyVisible = false;
+
     public static void main(String[] args) {
         DiskXmlUI diskXmlUI = new DiskXmlUI();
         JFrame jFrame = new JFrame();
@@ -40,7 +44,11 @@ public class DiskXmlUI extends JPanel {
     JButton jbNew = new JButton("新建");
     JButton jbPath = new JButton("检索目录");
     JButton jbFile = new JButton("检索文件");
+    JButton jbCount = new JButton("统计数量");
+    JButton jbInfo = new JButton("获取信息");
     JButton jbScore = new JButton("计算分数");
+
+    JButton jbTree = new JButton("生成树");
 
     public DiskXmlUI() {
         setLayout(new BorderLayout());
@@ -63,7 +71,7 @@ public class DiskXmlUI extends JPanel {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
-
+        jTree.setCellRenderer(new MusicTreeRender());
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -80,7 +88,7 @@ public class DiskXmlUI extends JPanel {
         gbc.weightx = 0.9;
         gbc.weighty = 0.05;
         jtfDiskPath.setEditable(false);
-        jtfDiskPath.setText("/Users/mac/Desktop/标准文件夹");
+        jtfDiskPath.setText("/Users/mac/Desktop/标准文件夹[TEST]");
         operatePanel.add(jtfDiskPath, gbc);
 
         gbc.gridx = 0;
@@ -102,11 +110,14 @@ public class DiskXmlUI extends JPanel {
         operatePanel.add(jtfXmlFile, gbc);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setLayout(new GridLayout(1, 7));
         buttonPanel.add(jbNew);
         buttonPanel.add(jbPath);
         buttonPanel.add(jbFile);
+        buttonPanel.add(jbCount);
+        buttonPanel.add(jbInfo);
         buttonPanel.add(jbScore);
+        buttonPanel.add(jbTree);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 10;
@@ -125,6 +136,8 @@ public class DiskXmlUI extends JPanel {
         operatePanel.add(jbTable, gbc);
 
         initAction();
+
+
     }
 
     private void initAction() {
@@ -153,27 +166,54 @@ public class DiskXmlUI extends JPanel {
         jbNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UtilDiskXml.createXml(jtfDiskPath.getText(), jtfXmlFile.getText());
+                UtilDiskXml.createXml(jtfDiskPath.getText(), jtfXmlFile.getText(), onlyVisible);
             }
         });
 
         jbPath.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UtilDiskXml.scanPaths(jtfDiskPath.getText(), jtfXmlFile.getText());
+                UtilDiskXml.scanPaths(jtfDiskPath.getText(), jtfXmlFile.getText(), onlyVisible);
             }
         });
 
         jbFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UtilDiskXml.scanFiles(jtfDiskPath.getText(), jtfXmlFile.getText());
+                UtilDiskXml.scanFiles(jtfDiskPath.getText(), jtfXmlFile.getText(), onlyVisible);
+            }
+        });
+
+        jbCount.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UtilDiskXml.countFile(jtfDiskPath.getText(), jtfXmlFile.getText());
+            }
+        });
+
+        jbInfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UtilDiskXml.readFileInfo(jtfDiskPath.getText(), jtfXmlFile.getText(), onlyVisible);
             }
         });
 
         jbScore.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+        jbTree.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File fromPath = new File(jtfDiskPath.getText());
+                String pathName = fromPath.getName();
+                String xmlfilename = jtfXmlFile.getText() + "/" + pathName + ".xml";
+                System.out.println(xmlfilename);
+                DefaultMutableTreeNode rootNode = UtilDiskXml.createTreeByXml(xmlfilename);
+                DefaultTreeModel defaultTreeModel = new DefaultTreeModel(rootNode);
+                jTree.setModel(defaultTreeModel);
             }
         });
 

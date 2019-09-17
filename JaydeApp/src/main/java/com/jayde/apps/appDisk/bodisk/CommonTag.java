@@ -1,4 +1,4 @@
-package com.jayde.apps.appDisk.bolibrary;
+package com.jayde.apps.appDisk.bodisk;
 
 import org.jaudiotagger.audio.wav.WavTag;
 import org.jaudiotagger.tag.FieldKey;
@@ -7,7 +7,12 @@ import org.jaudiotagger.tag.flac.FlacTag;
 import org.jaudiotagger.tag.id3.*;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentFieldKey;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
 import java.util.List;
 
 /**
@@ -40,7 +45,21 @@ public class CommonTag {
     String LANGUAGE;
     boolean IMAGE;
 
+    int loadErrorCode = 0;
+    String loadErrorMessage = "";
+
+    public static int LOAD_ERROR_CODE_1 = 1;
+    public static String LOAD_ERROR_MESSAGE_1 = "字符串不符合xml格式";
+
     String filename;
+
+    public int getLoadErrorCode() {
+        return loadErrorCode;
+    }
+
+    public void setLoadErrorCode(int loadErrorCode) {
+        this.loadErrorCode = loadErrorCode;
+    }
 
     public String getTagType() {
         return tagType;
@@ -54,108 +73,193 @@ public class CommonTag {
         return ALBUM;
     }
 
-    public void setALBUM(String ALBUM) {
-        this.ALBUM = ALBUM;
-        if (this.ALBUM == null) this.ALBUM = "";
+    public void setALBUM(String inputAlbum) {
+        if (inputAlbum == null) {
+            ALBUM = "";
+        } else {
+            ALBUM = inputAlbum.trim();
+            if (cheXmlString(ALBUM) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage = "ALBUM:乱码" ;
+            }
+        }
     }
 
     public String getALBUMARTIST() {
         return ALBUMARTIST;
     }
 
-    public void setALBUMARTIST(String ALBUMARTIST) {
-        this.ALBUMARTIST = ALBUMARTIST;
-        if (this.ALBUMARTIST == null) this.ALBUMARTIST = "";
+    public void setALBUMARTIST(String inputAlbumArtist) {
+        if (inputAlbumArtist == null) {
+            ALBUMARTIST = "";
+        } else {
+            ALBUMARTIST = inputAlbumArtist.trim();
+            if (cheXmlString(ALBUMARTIST) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  ALBUMARTIST:乱码" ;
+            }
+        }
     }
 
     public String getTITLE() {
         return TITLE;
     }
 
-    public void setTITLE(String TITLE) {
-        this.TITLE = TITLE;
-        if (this.TITLE == null) this.TITLE = "";
+    public void setTITLE(String inputTitle) {
+        if (inputTitle == null) {
+            TITLE = "";
+        } else {
+            TITLE = inputTitle.trim();
+            if (cheXmlString(TITLE) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  TITLE:乱码" ;
+            }
+        }
     }
 
     public String getARTIST() {
         return ARTIST;
     }
 
-    public void setARTIST(String ARTIST) {
-        this.ARTIST = ARTIST;
-        if (this.ARTIST == null) this.ARTIST = "";
+    public void setARTIST(String inputArtist) {
+        if (inputArtist == null) {
+            ARTIST = "";
+        } else {
+            ARTIST = inputArtist.trim();
+            if (cheXmlString(ARTIST) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  ARTIST:乱码" ;
+            }
+        }
     }
 
     public String getTRACKNUMBER() {
         return TRACKNUMBER;
     }
 
-    public void setTRACKNUMBER(String TRACKNUMBER) {
-        this.TRACKNUMBER = TRACKNUMBER;
-        if (this.TRACKNUMBER == null) this.TRACKNUMBER = "";
+    public void setTRACKNUMBER(String inputTrackNumber) {
+        if (inputTrackNumber == null) {
+            TRACKNUMBER = "";
+        } else {
+            TRACKNUMBER = inputTrackNumber.trim();
+            if (cheXmlString(TRACKNUMBER) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  TRACKNUMBER:乱码" ;
+            }
+        }
     }
 
     public String getTRACKTOTAL() {
         return TRACKTOTAL;
     }
 
-    public void setTRACKTOTAL(String TRACKTOTAL) {
-        this.TRACKTOTAL = TRACKTOTAL;
-        if (this.TRACKTOTAL == null) this.TRACKTOTAL = "";
+    public void setTRACKTOTAL(String inputTrackTotal) {
+        if (inputTrackTotal == null) {
+            TRACKTOTAL = "";
+        } else {
+            TRACKTOTAL = inputTrackTotal.trim();
+            if (cheXmlString(TRACKTOTAL) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  TRACKTOTAL:乱码" ;
+            }
+        }
     }
 
     public String getDISCNUMBER() {
         return DISCNUMBER;
     }
 
-    public void setDISCNUMBER(String DISCNUMBER) {
-        this.DISCNUMBER = DISCNUMBER;
-        if (this.DISCNUMBER == null) this.DISCNUMBER = "";
+    public void setDISCNUMBER(String inputDiscNumber) {
+        if (inputDiscNumber == null) {
+            DISCNUMBER = "";
+        } else {
+            DISCNUMBER = inputDiscNumber.trim();
+            if (cheXmlString(DISCNUMBER) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  DISCNUMBER:乱码" ;
+            }
+        }
     }
 
     public String getDISCTOTAL() {
         return DISCTOTAL;
     }
 
-    public void setDISCTOTAL(String DISCTOTAL) {
-        this.DISCTOTAL = DISCTOTAL;
-        if (this.DISCTOTAL == null) this.DISCTOTAL = "";
+    public void setDISCTOTAL(String inputDiscTotal) {
+        if (inputDiscTotal == null) {
+            DISCTOTAL = "";
+        } else {
+            DISCTOTAL = inputDiscTotal.trim();
+            if (cheXmlString(DISCTOTAL) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  DISCTOTAL:乱码" ;
+
+            }
+        }
     }
 
     public String getDATE() {
         return DATE;
     }
 
-    public void setDATE(String DATE) {
-        this.DATE = DATE;
-        if (this.DATE == null) this.DATE = "";
+    public void setDATE(String inputDate) {
+        if (inputDate == null) {
+            DATE = "";
+        } else {
+            DATE = inputDate.trim();
+            if (cheXmlString(DATE) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  DATE:乱码" ;
+            }
+        }
     }
 
     public String getGENRE() {
         return GENRE;
     }
 
-    public void setGENRE(String GENRE) {
-        this.GENRE = GENRE;
-        if (this.GENRE == null) this.GENRE = "";
+    public void setGENRE(String inputGenre) {
+        if (inputGenre == null) {
+            GENRE = "";
+        } else {
+            GENRE = inputGenre.trim();
+            if (cheXmlString(GENRE) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  GENRE:乱码" ;
+            }
+        }
     }
 
     public String getCOMMENT() {
         return COMMENT;
     }
 
-    public void setCOMMENT(String COMMENT) {
-        this.COMMENT = COMMENT;
-        if (this.COMMENT == null) this.COMMENT = "";
+    public void setCOMMENT(String inputComment) {
+        if (inputComment == null) {
+            COMMENT = "";
+        } else {
+            COMMENT = inputComment.trim();
+            if (cheXmlString(COMMENT) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  COMMENT:乱码" ;
+            }
+        }
     }
 
     public String getLYRICS() {
         return LYRICS;
     }
 
-    public void setLYRICS(String LYRICS) {
-        this.LYRICS = LYRICS;
-        if (this.LYRICS == null) this.LYRICS = "";
+    public void setLYRICS(String inputLyrics) {
+        if (inputLyrics == null) {
+            LYRICS = "";
+        } else {
+            LYRICS = inputLyrics.trim();
+            if (cheXmlString(LYRICS) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  LYRICS:乱码" ;
+            }
+        }
     }
 
     public boolean getIMAGE() {
@@ -170,9 +274,16 @@ public class CommonTag {
         return LANGUAGE;
     }
 
-    public void setLANGUAGE(String LANGUAGE) {
-        this.LANGUAGE = LANGUAGE;
-        if (this.LANGUAGE == null) this.LANGUAGE = "";
+    public void setLANGUAGE(String inputLanguge) {
+        if (inputLanguge == null) {
+            LANGUAGE = "";
+        } else {
+            LANGUAGE = inputLanguge.trim();
+            if (cheXmlString(LANGUAGE) == false) {
+                setLoadErrorCode(LOAD_ERROR_CODE_1);
+                loadErrorMessage += "  LANGUAGE:乱码" ;
+            }
+        }
     }
 
     public String getFilename() {
@@ -181,6 +292,14 @@ public class CommonTag {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getLoadErrorMessage() {
+        return loadErrorMessage;
+    }
+
+    public void setLoadErrorMessage(String loadErrorMessage) {
+        this.loadErrorMessage = loadErrorMessage;
     }
 
     public CommonTag(String inputFilename, FlacTag flacTag) {
@@ -220,9 +339,9 @@ public class CommonTag {
         setLANGUAGE(v1Tag.getFirst(FieldKey.LANGUAGE));
         setLYRICS(v1Tag.getFirst(FieldKey.LYRICS));
         List<Artwork> list = v1Tag.getArtworkList();
-        if(list!=null && list.size()>0){
+        if (list != null && list.size() > 0) {
             setIMAGE(true);
-        }else{
+        } else {
             setIMAGE(false);
         }
     }
@@ -243,9 +362,9 @@ public class CommonTag {
         setLANGUAGE(v22Tag.getFirst(FieldKey.LANGUAGE));
         setLYRICS(v22Tag.getFirst(FieldKey.LYRICS));
         List<Artwork> list = v22Tag.getArtworkList();
-        if(list!=null && list.size()>0){
+        if (list != null && list.size() > 0) {
             setIMAGE(true);
-        }else{
+        } else {
             setIMAGE(false);
         }
     }
@@ -266,9 +385,9 @@ public class CommonTag {
         setLANGUAGE(v23Tag.getFirst(FieldKey.LANGUAGE));
         setLYRICS(v23Tag.getFirst(FieldKey.LYRICS));
         List<Artwork> list = v23Tag.getArtworkList();
-        if(list!=null && list.size()>0){
+        if (list != null && list.size() > 0) {
             setIMAGE(true);
-        }else{
+        } else {
             setIMAGE(false);
         }
     }
@@ -289,9 +408,9 @@ public class CommonTag {
         setLANGUAGE(v24Tag.getFirst(FieldKey.LANGUAGE));
         setLYRICS(v24Tag.getFirst(FieldKey.LYRICS));
         List<Artwork> list = v24Tag.getArtworkList();
-        if(list!=null && list.size()>0){
+        if (list != null && list.size() > 0) {
             setIMAGE(true);
-        }else{
+        } else {
             setIMAGE(false);
         }
     }
@@ -319,4 +438,30 @@ public class CommonTag {
 //        }
     }
 
+    private static boolean cheXmlString(String str) {
+        if (str.length() == 0) {
+            return true;
+        }
+        str = "<ROOT><Node att=\""+str+"\"/></ROOT>";
+        System.out.println("------------------");
+        boolean flag = true;
+        try {
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(new InputSource(new StringReader(str)));
+            System.out.println(document);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            flag = false;
+        }
+        return flag;
+//        Document document = DocumentHelper.createDocument();
+//        Element rootEle = document.addElement("root");
+//        rootEle.addAttribute("att", str);
+//        System.out.println(str);
+//        System.out.println(document.supportsParent());
+//        return document.supportsParent();
+//        str = "<att name=\"" + str + "\"/>";
+//        return
+    }
 }
