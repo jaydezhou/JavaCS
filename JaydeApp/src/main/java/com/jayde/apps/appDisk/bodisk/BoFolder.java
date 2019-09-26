@@ -1,6 +1,8 @@
 package com.jayde.apps.appDisk.bodisk;
 
 
+import org.dom4j.Element;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,18 +100,64 @@ public class BoFolder extends AbstractBoFile {
         super(inputFileName);
         listSonFolder = new ArrayList<>();
         listSonFile = new ArrayList<>();
+        initFileType();
     }
 
     public BoFolder(File inputFile) {
         super(inputFile);
         listSonFolder = new ArrayList<>();
         listSonFile = new ArrayList<>();
+        initFileType();
+    }
+
+    public BoFolder(Element inputEle) {
+        super(inputEle);
+        setSelfFilesCount(Long.parseLong(inputEle.attributeValue("selfFilesCount")));
+        setSelfFolderCount(Long.parseLong(inputEle.attributeValue("selfFolderCount")));
+        setSelfFilesSize(Long.parseLong(inputEle.attributeValue("selfFilesSize")));
+        setAllFilesCount(Long.parseLong(inputEle.attributeValue("allFilesCount")));
+        setAllFolderCount(Long.parseLong(inputEle.attributeValue("allFolderCount")));
+        setAllFilesSize(Long.parseLong(inputEle.attributeValue("allFilesSize")));
+        listSonFolder = new ArrayList<>();
+        listSonFile = new ArrayList<>();
+        initFileType();
     }
 
     @Override
+    public Element toElement(Element parentELement) {
+        Element currentEle = parentELement.addElement("P");
+        currentEle.addAttribute("name", filename);
+        currentEle.addAttribute("modifyDate", String.valueOf(modifyDate));
+        currentEle.addAttribute("attributes", attributes);
+        currentEle.addAttribute("filetype", String.valueOf(fileType));
+        currentEle.addAttribute("score", String.valueOf(score));
+        currentEle.addAttribute("selfFilesCount", String.valueOf(selfFilesCount));
+        currentEle.addAttribute("selfFolderCount", String.valueOf(selfFolderCount));
+        currentEle.addAttribute("selfFilesSize", String.valueOf(selfFilesSize));
+        currentEle.addAttribute("allFilesCount", String.valueOf(allFilesCount));
+        currentEle.addAttribute("allFolderCount", String.valueOf(allFolderCount));
+        currentEle.addAttribute("allFilesSize", String.valueOf(allFilesSize));
+        currentEle.addAttribute("id", id);
+        currentEle.addAttribute("pid", pid);
+//        currentEle.addAttribute("suffix", suffix);
+        for (BoFile boFile : listSonFile) {
+            if (boFile instanceof BoMusicSongFile) {
+                BoMusicSongFile boMusicSongFile = (BoMusicSongFile) boFile;
+                currentEle = boMusicSongFile.toElement(currentEle);
+            } else {
+                currentEle = boFile.toElement(currentEle);
+            }
+        }
+        for (BoFolder boFolder : listSonFolder) {
+            currentEle = boFolder.toElement(currentEle);
+        }
+        return parentELement;
+    }
+    private void initFileType() {
+        setFileType(AbstractBoFile.FILETYPE_FOLDER_BOFOLDER);
+    }
+    @Override
     public String toString() {
-        return "BoFolder{" +
-                "filename='" + filename + '\'' +
-                '}';
+        return "P:" + filename;
     }
 }

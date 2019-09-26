@@ -1,7 +1,11 @@
 package com.jayde.apps.appDisk.bodisk;
 
+import org.dom4j.Element;
+
 import java.io.File;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @ProjectName: JavaCS
@@ -22,9 +26,53 @@ public class BoSetFolder extends BoFolder {
 
     public BoSetFolder(String inputFileName) {
         super(inputFileName);
+        initFileType();
     }
 
     public BoSetFolder(File inputFile) {
         super(inputFile);
+        initFileType();
     }
+    public BoSetFolder(Element inputEle) {
+        super(inputEle);
+        initFileType();
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    private void initFileType() {
+        setFileType(AbstractBoFile.FILETYPE_FOLDER_BOSETFOLDER);
+    }
+
+
+    public static boolean isLibraryFolder(BoFolder boFolder) {
+        String filename = boFolder.getFilename();
+        Matcher matcher = pattern.matcher(filename);
+        if(matcher.find()){
+            System.out.println("OK");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "BSF:" +filename;
+    }
+
+    static Pattern pattern = Pattern.compile("标准文件夹");
 }

@@ -1,6 +1,8 @@
 package com.jayde.apps.appDisk.bodisk;
 
 
+import org.dom4j.Element;
+
 import java.io.File;
 
 /**
@@ -40,19 +42,26 @@ public class BoFile extends AbstractBoFile {
 
     public BoFile(String inputFileName) {
         super(inputFileName);
-        suffix = UtilBoFile.getUpperSuffix(inputFileName);
+        suffix = UtilBoFile.getUpperSuffix(filename);
         size = 0;
         initFileType();
     }
 
     public BoFile(File inputFile) {
         super(inputFile);
-        suffix = UtilBoFile.getUpperSuffix(inputFile.getName());
+        suffix = UtilBoFile.getUpperSuffix(filename);
         size = inputFile.length();
         initFileType();
     }
 
+    public BoFile(Element inputEle) {
+        super(inputEle);
+        suffix = UtilBoFile.getUpperSuffix(filename);
+        size = Long.parseLong(inputEle.attributeValue("size"));
+    }
+
     private void initFileType() {
+        setFileType(AbstractBoFile.FILETYPE_FILE_BOFILE);
         switch (suffix) {
             case "AAC":
             case "ACC":
@@ -66,15 +75,28 @@ public class BoFile extends AbstractBoFile {
             case "MP3":
             case "OGG":
             case "WAV":
-                setFileType(FILE_TYPE_11_MUSIC_SONG);
+                setFileType(AbstractBoFile.FILETYPE_FILE_BOMUSICSONGFILE);
                 break;
         }
     }
 
     @Override
+    public Element toElement(Element parentELement) {
+        Element currentEle = parentELement.addElement("F");
+        currentEle.addAttribute("name", filename);
+        currentEle.addAttribute("size", String.valueOf(size));
+        currentEle.addAttribute("modifyDate", String.valueOf(modifyDate));
+        currentEle.addAttribute("attributes", attributes);
+        currentEle.addAttribute("filetype", String.valueOf(fileType));
+        currentEle.addAttribute("score", String.valueOf(score));
+//        currentEle.addAttribute("suffix", suffix);
+        currentEle.addAttribute("id", id);
+        currentEle.addAttribute("pid", pid);
+        return parentELement;
+    }
+
+    @Override
     public String toString() {
-        return "BoFile{" +
-                "filename='" + filename + '\'' +
-                '}';
+        return "F:" + filename;
     }
 }

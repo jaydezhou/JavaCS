@@ -1,6 +1,10 @@
 package com.jayde.apps.appDisk.bodisk;
 
+import org.dom4j.Element;
+
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @ProjectName: JavaCS
@@ -17,16 +21,24 @@ import java.io.File;
  */
 public class BoSetFile extends BoFile {
 
-    public static int SETFILE_TYPE_MUSIC = 11;
-    public static int SETFILE_TYPE_MUSICINFO = 12;
-    public static int SETFILE_TYPE_MUSICOTHER = 13;
 
     public BoSetFile(String inputFileName) {
         super(inputFileName);
+        initFileType();
     }
 
     public BoSetFile(File inputFile) {
         super(inputFile);
+        initFileType();
+    }
+
+    public BoSetFile(Element inputEle) {
+        super(inputEle);
+        initFileType();
+    }
+
+    private void initFileType() {
+        setFileType(AbstractBoFile.FILETYPE_FILE_BOSETFILE);
     }
 
 }

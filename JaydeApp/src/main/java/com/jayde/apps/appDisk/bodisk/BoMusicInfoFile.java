@@ -1,5 +1,7 @@
 package com.jayde.apps.appDisk.bodisk;
 
+import org.dom4j.Element;
+
 import java.io.File;
 
 /**
@@ -15,13 +17,29 @@ import java.io.File;
  * @Version: 1.0
  * <p>Copyright: Copyright (c) 2019</p>
  */
-public class BoMusicInfoFile extends BoSetFile{
+public class BoMusicInfoFile extends BoSetFile {
 
     public BoMusicInfoFile(String inputFileName) {
         super(inputFileName);
+        initFileType();
     }
 
     public BoMusicInfoFile(File inputFile) {
         super(inputFile);
+        initFileType();
+    }
+
+    public BoMusicInfoFile(Element inputEle) {
+        super(inputEle);
+        initFileType();
+    }
+
+    private void initFileType() {
+        setFileType(AbstractBoFile.FILETYPE_FILE_BOMUSICINFOFILE);
+    }
+
+    @Override
+    public String toString() {
+        return "F(MI):" + filename;
     }
 }

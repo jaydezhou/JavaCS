@@ -1,5 +1,7 @@
 package com.jayde.apps.appDisk.bodisk;
 
+import org.dom4j.Element;
+
 import java.io.File;
 import java.util.UUID;
 
@@ -17,12 +19,24 @@ import java.util.UUID;
  * <p>Copyright: Copyright (c) 2019</p>
  */
 public class AbstractBoFile {
+    public static final int FILETYPE_ABSTRACT = 0;
+    public static final int FILETYPE_FOLDER_BOFOLDER= 10;
+    public static final int FILETYPE_FOLDER_BOSETFOLDER= 20;
+    public static final int FILETYPE_FOLDER_BONORMALFOLDER= 30;
+    public static final int FILETYPE_FILE_BOFILE= 1000;
+    public static final int FILETYPE_FILE_BOSETFILE= 1010;
+    public static final int FILETYPE_FILE_BONORMALFILE= 1030;
+    public static final int FILETYPE_FILE_BOMUSICINFOFILE= 3010;
+    public static final int FILETYPE_FILE_BOMUSICOTHERFILE= 3020;
+    public static final int FILETYPE_FILE_BOMUSICSONGFILE= 11;
+
+
     String id;
     String pid;
     String filename;
     long modifyDate;
     String attributes;
-    int fileType;
+    int fileType = FILETYPE_ABSTRACT;
     float score;
     BoFolder parentFolder;
 
@@ -118,6 +132,20 @@ public class AbstractBoFile {
         }
         attributes = stringBuilder.toString();
 
+    }
+
+    public AbstractBoFile(Element inputEle) {
+        setId(inputEle.attributeValue("id"));
+//        setPid(inputEle.attributeValue("pid"));
+        setFilename(inputEle.attributeValue("name"));
+        setModifyDate(Long.parseLong(inputEle.attributeValue("modifyDate")));
+        setAttributes(inputEle.attributeValue("attributes"));
+        setFileType(Integer.parseInt(inputEle.attributeValue("filetype")));
+        setScore(Float.parseFloat(inputEle.attributeValue("score")));
+    }
+
+    public Element toElement(Element parentELement) {
+        return null;
     }
 
     public AbstractBoFile(String inputFileName) {

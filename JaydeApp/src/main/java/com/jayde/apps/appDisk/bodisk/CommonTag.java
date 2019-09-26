@@ -1,5 +1,6 @@
 package com.jayde.apps.appDisk.bodisk;
 
+import org.dom4j.Element;
 import org.jaudiotagger.audio.wav.WavTag;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.datatype.Artwork;
@@ -79,8 +80,9 @@ public class CommonTag {
         } else {
             ALBUM = inputAlbum.trim();
             if (cheXmlString(ALBUM) == false) {
+                ALBUM = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage = "ALBUM:乱码" ;
+                loadErrorMessage = "ALBUM:乱码";
             }
         }
     }
@@ -95,8 +97,9 @@ public class CommonTag {
         } else {
             ALBUMARTIST = inputAlbumArtist.trim();
             if (cheXmlString(ALBUMARTIST) == false) {
+                ALBUMARTIST = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  ALBUMARTIST:乱码" ;
+                loadErrorMessage += "  ALBUMARTIST:乱码";
             }
         }
     }
@@ -111,8 +114,9 @@ public class CommonTag {
         } else {
             TITLE = inputTitle.trim();
             if (cheXmlString(TITLE) == false) {
+                TITLE = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  TITLE:乱码" ;
+                loadErrorMessage += "  TITLE:乱码";
             }
         }
     }
@@ -127,8 +131,9 @@ public class CommonTag {
         } else {
             ARTIST = inputArtist.trim();
             if (cheXmlString(ARTIST) == false) {
+                ARTIST = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  ARTIST:乱码" ;
+                loadErrorMessage += "  ARTIST:乱码";
             }
         }
     }
@@ -143,8 +148,9 @@ public class CommonTag {
         } else {
             TRACKNUMBER = inputTrackNumber.trim();
             if (cheXmlString(TRACKNUMBER) == false) {
+                TRACKNUMBER = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  TRACKNUMBER:乱码" ;
+                loadErrorMessage += "  TRACKNUMBER:乱码";
             }
         }
     }
@@ -159,8 +165,9 @@ public class CommonTag {
         } else {
             TRACKTOTAL = inputTrackTotal.trim();
             if (cheXmlString(TRACKTOTAL) == false) {
+                TRACKTOTAL = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  TRACKTOTAL:乱码" ;
+                loadErrorMessage += "  TRACKTOTAL:乱码";
             }
         }
     }
@@ -175,8 +182,9 @@ public class CommonTag {
         } else {
             DISCNUMBER = inputDiscNumber.trim();
             if (cheXmlString(DISCNUMBER) == false) {
+                DISCNUMBER = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  DISCNUMBER:乱码" ;
+                loadErrorMessage += "  DISCNUMBER:乱码";
             }
         }
     }
@@ -191,8 +199,9 @@ public class CommonTag {
         } else {
             DISCTOTAL = inputDiscTotal.trim();
             if (cheXmlString(DISCTOTAL) == false) {
+                DISCTOTAL = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  DISCTOTAL:乱码" ;
+                loadErrorMessage += "  DISCTOTAL:乱码";
 
             }
         }
@@ -208,8 +217,9 @@ public class CommonTag {
         } else {
             DATE = inputDate.trim();
             if (cheXmlString(DATE) == false) {
+                DATE = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  DATE:乱码" ;
+                loadErrorMessage += "  DATE:乱码";
             }
         }
     }
@@ -224,8 +234,9 @@ public class CommonTag {
         } else {
             GENRE = inputGenre.trim();
             if (cheXmlString(GENRE) == false) {
+                GENRE = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  GENRE:乱码" ;
+                loadErrorMessage += "  GENRE:乱码";
             }
         }
     }
@@ -240,8 +251,9 @@ public class CommonTag {
         } else {
             COMMENT = inputComment.trim();
             if (cheXmlString(COMMENT) == false) {
+                COMMENT = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  COMMENT:乱码" ;
+                loadErrorMessage += "  COMMENT:乱码";
             }
         }
     }
@@ -256,8 +268,9 @@ public class CommonTag {
         } else {
             LYRICS = inputLyrics.trim();
             if (cheXmlString(LYRICS) == false) {
+                LYRICS = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  LYRICS:乱码" ;
+                loadErrorMessage += "  LYRICS:乱码";
             }
         }
     }
@@ -280,8 +293,9 @@ public class CommonTag {
         } else {
             LANGUAGE = inputLanguge.trim();
             if (cheXmlString(LANGUAGE) == false) {
+                LANGUAGE = "";
                 setLoadErrorCode(LOAD_ERROR_CODE_1);
-                loadErrorMessage += "  LANGUAGE:乱码" ;
+                loadErrorMessage += "  LANGUAGE:乱码";
             }
         }
     }
@@ -442,7 +456,7 @@ public class CommonTag {
         if (str.length() == 0) {
             return true;
         }
-        str = "<ROOT><Node att=\""+str+"\"/></ROOT>";
+        str = "<ROOT><Node att=\"" + str + "\"/></ROOT>";
         System.out.println("------------------");
         boolean flag = true;
         try {
@@ -463,5 +477,27 @@ public class CommonTag {
 //        return document.supportsParent();
 //        str = "<att name=\"" + str + "\"/>";
 //        return
+    }
+
+    public Element toElement(Element parentTagELement) {
+
+        parentTagELement.addAttribute("read", "true");
+        parentTagELement.addAttribute("tagType", getTagType());
+        parentTagELement.addAttribute("ALBUM", getALBUM());
+        parentTagELement.addAttribute("ALBUMARTIST", getALBUMARTIST());
+        parentTagELement.addAttribute("TITLE", getTITLE());
+        parentTagELement.addAttribute("ARTIST", getARTIST());
+        parentTagELement.addAttribute("TRACKNUMBER", getTRACKNUMBER());
+        parentTagELement.addAttribute("TRACKTOTAL", getTRACKTOTAL());
+        parentTagELement.addAttribute("DISCNUMBER", getDISCNUMBER());
+        parentTagELement.addAttribute("DISCTOTAL", getDISCTOTAL());
+        parentTagELement.addAttribute("DATE", getDATE());
+        parentTagELement.addAttribute("GENRE", getGENRE());
+        parentTagELement.addAttribute("COMMENT", getCOMMENT());
+        parentTagELement.addAttribute("LYRICS", getLYRICS());
+        parentTagELement.addAttribute("LANGUAGE", getLANGUAGE());
+        parentTagELement.addAttribute("IMAGE", getIMAGE() + "");
+
+        return parentTagELement;
     }
 }

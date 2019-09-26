@@ -1,5 +1,7 @@
 package com.jayde.apps.appDisk.bodisk;
 
+import org.dom4j.Element;
+
 import java.io.File;
 
 /**
@@ -19,10 +21,20 @@ public class BoNormalFolder extends BoFolder {
 
     public BoNormalFolder(String inputFileName) {
         super(inputFileName);
+        initFileType();
     }
 
     public BoNormalFolder(File inputFile) {
         super(inputFile);
+        initFileType();
     }
 
+    public BoNormalFolder(Element inputEle) {
+        super(inputEle);
+        initFileType();
+    }
+
+    private void initFileType() {
+        setFileType(AbstractBoFile.FILETYPE_FOLDER_BONORMALFOLDER);
+    }
 }
